@@ -181,6 +181,12 @@ button { font-family: inherit; }
 .loc-facts div { display: grid; }
 .loc-facts dt { font-size: 12px; color: var(--ink-muted); }
 .loc-facts dd { margin: 0; font-size: 14px; font-weight: 500; }
+/* Step 2: calculate the funding gap. Bill and equation on the left, family budget and rate on the right. */
+.sg { height: 100%; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-8); max-width: 1320px; margin: 0 auto; }
+.sg-col { display: grid; gap: var(--space-4); align-content: start; padding-right: var(--space-2); }
+.goal-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--space-4); align-items: end; }
+@media (max-width: 520px) { .goal-row { grid-template-columns: 1fr; } }
+
 /* one-home bill */
 .bill { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
 .bill-col { border: 1px solid var(--border); border-radius: var(--radius-sm); margin: 0; padding: var(--space-2) var(--space-3) var(--space-3); display: grid; gap: var(--space-2); min-width: 0; }
@@ -383,7 +389,8 @@ body.on-start .controls { visibility: hidden; }
   .screen { padding: var(--space-4); overflow-y: auto; }
   .screen-hero { overflow: hidden; }
   .hero-inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); padding: var(--space-8) var(--pad-x); }
-  .s1, .s2, .s3 { height: auto; grid-template-rows: auto; grid-template-columns: minmax(0, 1fr); }
+  .s1, .s2, .s3, .sg { height: auto; grid-template-rows: auto; grid-template-columns: minmax(0, 1fr); }
+  .sg-col { overflow: visible; padding-right: 0; }
   .s3-list { overflow: visible; padding-right: 0; }
   .draft-panel { min-height: 520px; }
   .sender { grid-template-columns: minmax(0, 1fr); }

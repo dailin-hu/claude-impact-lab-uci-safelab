@@ -19,9 +19,10 @@
       <img class="logo-dark" src="assets/safelab-lockup-white.png" alt="SafeLab AI Engineering" width="116">
     </button>
     <ol class="stepper" id="stepper" aria-label="Steps">
-      <li><button type="button" data-go="1"><span class="num">01</span><span class="txt">Location and gap</span></button></li>
-      <li><button type="button" data-go="2"><span class="num">02</span><span class="txt">Build your funding plan</span></button></li>
-      <li><button type="button" data-go="3"><span class="num">03</span><span class="txt">Take action</span></button></li>
+      <li><button type="button" data-go="1"><span class="num">01</span><span class="txt">Locate the home</span></button></li>
+      <li><button type="button" data-go="2"><span class="num">02</span><span class="txt">Calculate the funding gap</span></button></li>
+      <li><button type="button" data-go="3"><span class="num">03</span><span class="txt">Build your funding plan</span></button></li>
+      <li><button type="button" data-go="4"><span class="num">04</span><span class="txt">Take action</span></button></li>
     </ol>
     <span class="pill-tag">Prototype</span>
   </nav>
@@ -47,8 +48,8 @@
         </div>
       </section>
 
-      <!-- Step 1: location and gap -->
-      <section class="screen" data-screen="1" aria-label="Step 1, location and gap">
+      <!-- Step 1: locate the home -->
+      <section class="screen" data-screen="1" aria-label="Step 1, locate the home">
         <div class="s1">
           <div class="card map-card">
             <div id="map" role="application" aria-label="Map. Click to place the home." tabindex="0"></div>
@@ -56,7 +57,7 @@
           </div>
           <div class="s1-side scroll">
             <header class="screen-head">
-              <span class="mono-label">Step 01 / 03</span>
+              <span class="mono-label">Step 01 / 04</span>
               <h2 class="screen-title">Where Is The Home?</h2>
             </header>
             <form class="search-row" id="search-form" autocomplete="off">
@@ -80,9 +81,20 @@
               <p class="caption muted" id="loc-source">—</p>
             </div>
 
-            <div class="divider"></div>
+            <p class="caption muted">Next: calculate the funding gap for one home here.</p>
+          </div>
+        </div>
+      </section>
 
-            <h3 class="heading-sm">Does It Pencil? The One-Home Bill</h3>
+      <!-- Step 2: calculate the funding gap -->
+      <section class="screen" data-screen="2" aria-label="Step 2, calculate the funding gap">
+        <div class="sg">
+          <div class="sg-col scroll">
+            <header class="screen-head">
+              <span class="mono-label">Step 02 / 04</span>
+              <h2 class="screen-title">Calculate The Funding Gap</h2>
+              <p class="body-sm muted" id="gap-place">Does it pencil? One home.</p>
+            </header>
             <p class="caption muted">The family's price is capped by income, so their monthly budget and today's mortgage rate set it. The gap is what is left. Defaults are the repo's synthetic example deal: <span class="chip chip-assume">Assumption</span> until you enter your pro forma.</p>
 
             <div class="bill">
@@ -103,6 +115,20 @@
               </fieldset>
             </div>
 
+            <div class="equation" id="equation" aria-live="polite"></div>
+
+            <div class="goal-row">
+              <div class="goal">
+                <span class="label">Goal: gap to close for one home</span>
+                <span class="goal-num" id="gap-total">$95,000</span>
+                <span class="caption muted" id="goal-time">Needed within 18 months from today.</span>
+              </div>
+              <div class="field"><label class="label" for="deadline">Money needed within (months)</label><input class="input" id="deadline" type="number" min="1" max="60" step="1" value="18"></div>
+            </div>
+            <p class="caption muted"><span class="chip chip-assume">Assumption</span> 18 months is a placeholder. Each source's time to money is the time to prepare that application or ask plus its wait for funds, counted from today. Money that lands after your deadline counts half.</p>
+
+          </div>
+          <div class="sg-col scroll">
             <div class="family">
               <span class="label">What the family can pay</span>
               <div class="seg" id="budget-mode" role="radiogroup" aria-label="Where the monthly budget comes from">
@@ -137,17 +163,6 @@
               </details>
             </div>
 
-            <div class="equation" id="equation" aria-live="polite"></div>
-
-            <div class="gap-inputs">
-              <div class="field"><label class="label" for="deadline">Money needed within (months)</label><input class="input" id="deadline" type="number" min="1" max="60" step="1" value="18"></div>
-            </div>
-            <p class="caption muted"><span class="chip chip-assume">Assumption</span> 18 months is a placeholder. Each source's time to money is the time to prepare that application or ask plus its wait for funds, counted from today. Money that lands after your deadline counts half.</p>
-            <div class="goal">
-              <span class="label">Goal: gap to close for one home</span>
-              <span class="goal-num" id="gap-total">$95,000</span>
-              <span class="caption muted" id="goal-time">Needed within 18 months from today.</span>
-            </div>
 
             <div class="dates">
               <span class="label">Data dates</span>
@@ -157,13 +172,13 @@
         </div>
       </section>
 
-      <!-- Step 2: compare and build -->
-      <section class="screen" data-screen="2" aria-label="Step 2, build your funding plan">
+      <!-- Step 3: compare and build -->
+      <section class="screen" data-screen="3" aria-label="Step 3, build your funding plan">
         <div class="s2">
           <div class="s2-main">
             <header class="s2-head">
               <div class="screen-head">
-                <span class="mono-label">Step 02 / 03</span>
+                <span class="mono-label">Step 03 / 04</span>
                 <h2 class="screen-title">Build Your Funding Plan</h2>
                 <p class="body-sm muted" id="cmp-summary">—</p>
               </div>
@@ -209,12 +224,12 @@
         </div>
       </section>
 
-      <!-- Step 3: take action -->
-      <section class="screen" data-screen="3" aria-label="Step 3, take action">
+      <!-- Step 4: take action -->
+      <section class="screen" data-screen="4" aria-label="Step 4, take action">
         <div class="s3">
           <div class="s3-list">
             <header class="screen-head">
-              <span class="mono-label">Step 03 / 03</span>
+              <span class="mono-label">Step 04 / 04</span>
               <h2 class="screen-title">Take Action</h2>
               <p class="body-sm muted" id="act-summary">—</p>
             </header>

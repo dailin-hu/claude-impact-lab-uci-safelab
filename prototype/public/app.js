@@ -1,5 +1,6 @@
-// Gap Closer UI: Start, then two full-height steps that slide left and right.
-// 1 Location and gap · 2 Build your funding plan (compare and pick in one place). PROTOTYPE ONLY.
+// Gap Closer UI: Start, then four full-height steps that slide left and right.
+// 1 Locate the home · 2 Calculate the funding gap · 3 Build your funding plan · 4 Take action.
+// PROTOTYPE ONLY.
 (function () {
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => [...document.querySelectorAll(sel)];
@@ -18,7 +19,7 @@
     bond: { label: 'Bond', icon: 'banknotes' },
     lender: { label: 'Lender or bank', icon: 'circle-stack' },
   };
-  const LAST = 3;
+  const LAST = 4;
 
   const state = {
     screen: 0, place: null, sources: [], donors: [], crm: null, asOf: null, notes: [],
@@ -67,7 +68,7 @@
   const months = (m) => (m == null ? '?' : `${m}`);
 
   // ---------- navigation ----------
-  const NEXT = { 1: 'Build your plan', 2: 'Make action list', 3: 'Copy action list' };
+  const NEXT = { 1: 'Calculate the gap', 2: 'Build your plan', 3: 'Make action list', 4: 'Copy action list' };
   const canGo = (i) => i <= 1 || state.researched;
   function go(i) {
     i = Math.max(0, Math.min(LAST, i));
@@ -85,16 +86,17 @@
     $('#next-label').textContent = NEXT[i] || 'Next';
     $('#next-btn').disabled = i === 1 && !state.researched;
     updateHint();
-    if (i !== 2) closeDrawer();
+    if (i !== 3) closeDrawer();
     if (i === 1) setTimeout(() => map.invalidateSize(), 560);
-    if (i === 3) { renderActions(); if (!state.ai) checkAI(); }
+    if (i === 4) { renderActions(); if (!state.ai) checkAI(); }
   }
   function updateHint() {
     const g = readGap();
     const hints = {
-      1: state.researched ? `Ready: ${placeLabel()}. Goal ${usd.format(g.gap)} within ${g.deadline} months.` : 'Type an address and pick a suggestion, or click the map.',
-      2: 'Tick sources to add them to your plan. Click a name for details.',
-      3: 'Draft emails and applications. You review and send everything yourself.',
+      1: state.researched ? `Ready: ${placeLabel()}. Next, calculate the funding gap.` : 'Type an address and pick a suggestion, or click the map.',
+      2: `Goal ${usd.format(g.gap)} within ${g.deadline} months. Move the rate to see the gap change.`,
+      3: 'Tick sources to add them to your plan. Click a name for details.',
+      4: 'Draft emails and applications. You review and send everything yourself.',
     };
     $('#controls-hint').textContent = hints[state.screen] || '';
   }
@@ -197,6 +199,7 @@
     $('#loc-state').textContent = p.state || 'Unknown';
     $('#loc-tract').textContent = p.tract ? p.tract.replace('Census Tract ', '') : 'Unknown';
     $('#loc-source').textContent = `City, county and tract: ${p.source.name}, retrieved ${p.source.retrieved}.`;
+    $('#gap-place').textContent = `Does it pencil? One home at ${$('#loc-title').textContent}, ${placeLabel()}.`;
   }
 
   async function research() {
@@ -382,7 +385,7 @@
     updateHint();
   }
 
-  // ---------- step 2: table ----------
+  // ---------- step 3: table ----------
   function fitChips(c) {
     const chips = [];
     if (c.kind === 'donor') {
