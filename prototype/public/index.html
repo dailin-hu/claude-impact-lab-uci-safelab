@@ -24,7 +24,10 @@
       <li><button type="button" data-go="3"><span class="num">03</span><span class="txt">Build your funding plan</span></button></li>
       <li><button type="button" data-go="4"><span class="num">04</span><span class="txt">Take action</span></button></li>
     </ol>
-    <span class="pill-tag">Prototype</span>
+    <div class="nav-right">
+      <span class="pill-tag">Prototype</span>
+      <button class="icon-btn" type="button" data-open-settings aria-label="Settings and connectors" title="Settings and connectors"><span data-icon="cog-6-tooth"></span></button>
+    </div>
   </nav>
 
   <main class="stage">
@@ -41,7 +44,10 @@
             </div>
             <div class="hero-side">
               <p class="hero-summary">Place the home, then compare every federal, state, county and city program, bond, lender and past donor that could help, and build the mix that covers your gap.</p>
-              <button class="btn btn-light btn-start" type="button" id="start-btn"><span>Start</span><span class="arrow-disc" data-icon="arrow-right"></span></button>
+              <div class="hero-btns">
+                <button class="btn btn-light btn-start" type="button" id="start-btn"><span>Start</span><span class="arrow-disc" data-icon="arrow-right"></span></button>
+                <button class="btn btn-ghost-light" type="button" data-open-settings><span class="btn-ic" data-icon="cog-6-tooth"></span>Settings &amp; connectors</button>
+              </div>
               <p class="hero-fine">Prototype. Program amounts are placeholders and donor records are synthetic. Not financial or legal advice.</p>
             </div>
           </div>
@@ -214,13 +220,9 @@
                 <tbody id="cmp-body"></tbody>
               </table>
             </div>
-            <p class="caption muted s2-foot"><span class="chip chip-placeholder">Placeholder</span> Program amounts, chances and timing are invented for the prototype. Expected value = amount × chance. Tick a row to add it to your plan, edit an amount to try a different ask, and click a name for details.</p>
+            <p class="caption muted s2-foot"><span class="chip chip-placeholder">Placeholder</span> Program amounts, chances and timing are invented for the prototype and kept conservative. Expected value = amount × chance. Tick a row to add it to your plan. Click anywhere on a row to see details and edit its amount, chance and timing.</p>
           </div>
           <aside class="panel s2-summary scroll" id="summary" aria-live="polite"></aside>
-          <aside class="drawer" id="drawer" aria-label="Source details" hidden>
-            <button class="drawer-close" type="button" id="drawer-close" aria-label="Close details">×</button>
-            <div class="drawer-body scroll" id="drawer-body"></div>
-          </aside>
         </div>
       </section>
 
@@ -255,6 +257,76 @@
     <p class="caption muted controls-hint" id="controls-hint">—</p>
     <button class="btn btn-dark" type="button" id="next-btn"><span id="next-label">Next</span><span class="arrow-disc" data-icon="arrow-right"></span></button>
   </footer>
+
+  <!-- Source popup (step 3). Outside the sliding track so it can cover the whole window. -->
+  <div class="modal-backdrop" id="drawer" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <button class="drawer-close" type="button" id="drawer-close" aria-label="Close details">×</button>
+      <div class="drawer-body scroll" id="drawer-body"></div>
+    </div>
+  </div>
+
+  <!-- Settings page -->
+  <div class="settings" id="settings" hidden>
+    <div class="settings-panel scroll" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <header class="settings-head">
+        <div class="screen-head">
+          <span class="mono-label">Settings</span>
+          <h2 class="screen-title" id="settings-title">Settings &amp; Connectors</h2>
+          <p class="body-sm muted">Saved in this browser only. Nothing here is sent anywhere.</p>
+        </div>
+        <button class="btn btn-dark btn-sm" type="button" id="settings-done">Done</button>
+      </header>
+
+      <section class="set-sec" aria-labelledby="set-h-profile">
+        <div class="set-sec-head">
+          <h3 class="heading-sm" id="set-h-profile">Your Profile</h3>
+          <p class="caption muted">Signs the drafts in step 4. Leave a field blank to keep a [placeholder] in the draft.</p>
+        </div>
+        <div class="set-grid">
+          <label class="field"><span class="label">Your name</span><input class="input" id="set-name" type="text" autocomplete="name" placeholder="[Your name]"></label>
+          <label class="field"><span class="label">Position</span><input class="input" id="set-position" type="text" autocomplete="organization-title" placeholder="e.g. Development Director"></label>
+          <label class="field"><span class="label">Organization</span><input class="input" id="set-org" type="text" autocomplete="organization" placeholder="[Your organization]"></label>
+          <label class="field"><span class="label">Email</span><input class="input" id="set-email" type="email" autocomplete="email" placeholder="you@example.org"></label>
+          <label class="field"><span class="label">Phone (optional)</span><input class="input" id="set-phone" type="tel" autocomplete="tel" placeholder="(555) 555-0100"></label>
+          <div class="field"><span class="label">Signature preview</span><pre class="sig" id="sig-preview"></pre></div>
+        </div>
+      </section>
+
+      <section class="set-sec" aria-labelledby="set-h-conn">
+        <div class="set-sec-head">
+          <h3 class="heading-sm" id="set-h-conn">Connectors</h3>
+          <p class="caption muted"><span class="chip chip-assume">Synthetic</span> Gmail and HubSpot are demo connections: no account is linked, nobody signs in and no data leaves this computer. <span class="chip chip-placeholder">Tentative</span> connectors are planned, not built.</p>
+        </div>
+        <div class="conn-list" id="conn-list"></div>
+      </section>
+
+      <section class="set-sec" aria-labelledby="set-h-prefs">
+        <div class="set-sec-head"><h3 class="heading-sm" id="set-h-prefs">Preferences</h3></div>
+        <div class="set-grid">
+          <label class="field"><span class="label">Default deadline (months)</span><input class="input" id="pref-deadline" type="number" min="1" max="60" step="1"><span class="caption muted">Sets "money needed within" in step 2. <span class="chip chip-assume">Assumption</span> 18 is a placeholder.</span></label>
+          <div class="field"><span class="label">Map style (step 1)</span>
+            <div class="seg" id="pref-basemap" role="radiogroup" aria-label="Map style">
+              <button type="button" role="radio" data-map="osm">Street</button>
+              <button type="button" role="radio" data-map="light">Light gray</button>
+              <button type="button" role="radio" data-map="satellite">Satellite</button>
+            </div>
+            <span class="caption muted">Street: OpenStreetMap. Light gray and Satellite: Esri, whose terms were not checked for this prototype.</span>
+          </div>
+          <div class="field"><span class="label">AI drafting</span><span class="body-sm" id="pref-ai">—</span><span class="caption muted">Set on the server with the ANTHROPIC_API_KEY environment variable. Never typed here.</span></div>
+        </div>
+      </section>
+
+      <section class="set-sec" aria-labelledby="set-h-data">
+        <div class="set-sec-head"><h3 class="heading-sm" id="set-h-data">Data On This Browser</h3></div>
+        <div class="set-row">
+          <p class="caption muted">Clears your profile, connector choices and preferences from this browser.</p>
+          <button class="btn btn-outline btn-xs" type="button" id="settings-reset">Clear settings</button>
+        </div>
+        <p class="caption muted">Prototype only. Donor records are synthetic and program numbers are placeholders. Not financial, legal or lending advice.</p>
+      </section>
+    </div>
+  </div>
 
   <div class="toast" id="toast" role="status" hidden></div>
 

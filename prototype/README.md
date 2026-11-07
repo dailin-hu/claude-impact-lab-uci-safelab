@@ -45,8 +45,11 @@ step pills at the top, or the arrow keys):
    donors (green). Each row shows why it fits (page checked, gave in this city, lived or grew up
    here, last gift), an editable amount, chance, an expected-value bar and months to money. Tick
    rows to add them to the plan; filter by type and sort by expected value, amount, chance or
-   speed. Click a name for a detail drawer with the facts, a time-to-money bar, the scoring
-   reasons, personal ties, giving history and the next step. Beside the table, a live meter shows
+   speed. Click anywhere on a row for a popup with the facts, a time-to-money bar, the scoring
+   reasons, personal ties, giving history and the next step. In the popup the amount (or ask),
+   chance of yes, months to prepare and months to wait are all editable; edits update the table
+   and the meter at once, rows you changed are tagged Edited, and **Reset to defaults** undoes
+   them. Beside the table, a live meter shows
    the total if every source says yes and the risk-weighted total (stacked by type) against the
    goal line, with checks for late money, either-or programs, unconfirmed sources, individual
    donors and donors with local ties. Sources that can't be counted yet sit at the bottom with
@@ -54,13 +57,23 @@ step pills at the top, or the arrow keys):
 
 3. **Take action.** The ticked sources become an action list, ordered by the date you need to
    start for the money to land before your deadline: people to contact from the CRM (individuals
-   and organizations) and applications to prepare. Enter your organization and name once. For
+   and organizations) and applications to prepare. Your name, position, organization, email and
+   phone come from Settings and sign every draft. For
    each person, **Draft email**; for each program, **Draft application** (a first-pass narrative
    with [TO CONFIRM] gaps) or **Email program staff**. **Draft all emails** drafts every ask in
    one go. Edit the draft in place, then **Open in Gmail**: Gmail's compose window opens in your
    own account with the recipient, subject and body filled in, and you press Send yourself.
    Application drafts can be copied or downloaded as text. Tick actions off as you go; **Copy
    action list** puts the checklist on the clipboard.
+
+**Settings & connectors** (button on the start page, gear icon in the top bar). Your profile
+(name, position, organization, email, phone) with a signature preview; connectors; preferences
+(default deadline, map style: Street, Light gray or Satellite); and a button to clear it all.
+Everything is saved in this browser only (localStorage) and never sent anywhere. Connectors:
+**Gmail** and **HubSpot** are SYNTHETIC demo connections: no account is linked and nobody signs in.
+Disconnecting HubSpot removes the synthetic donors from step 3; disconnecting Gmail turns drafts
+copy-only. **Givebutter**, Salesforce Nonprofit Cloud, Blackbaud Raiser's Edge NXT, Bloomerang and
+Google Calendar are TENTATIVE: listed as planned, not built.
 
 **Drafting:** with the Anthropic SDK installed and `ANTHROPIC_API_KEY` set, drafts come from
 Claude Opus 5.5 (`claude-opus-5-5`), told to use only the facts it is given and to put anything
@@ -151,7 +164,9 @@ same fields (`gifts` with `year`, `city`, `county`, `amount`, `purpose`; `ties` 
 | One home per plan | ASSUMPTION: the team's scope for the prototype | n/a |
 | Cost lines ($535,000), subsidies ($100,000), earned income ($55,000) | ASSUMPTION: the repo's synthetic example deal; they give a $95,000 gap at 7.18% | n/a |
 | 18-month default deadline | ASSUMPTION, editable | n/a |
-| Award per home, chance, prep months and months to funds for every program | ASSUMPTION: PLACEHOLDER values invented for the prototype | n/a |
+| Award per home, chance, prep months and months to funds for every program | ASSUMPTION: PLACEHOLDER values invented for the prototype. Lowered to conservative per-home figures ($4,000 to $15,000, about a third of the first guesses) on 2026-11-07 so no single program looks like it closes the gap | n/a |
+| Donor ask: half the median of their past (housing) gifts, rounded to $500, and never more than a fifth of the gap | ASSUMPTION in `advisor.js`: past gifts often funded whole programs, not one home; the cap spreads the risk | n/a |
+| Chance and timing typed in the step 3 popup | The user's own estimate, used as is (the half-chance rules apply only to the defaults) | n/a |
 | Donor records | SYNTHETIC, invented | n/a |
 | Donor chance: 0.6 × (gifts in same city 1.0, same county 0.4, none 0.1; plus personal tie to the city 0.3 or county 0.1; max 1.3), capped at 85%; ×0.6 if no gift in 3 years; ×0.5 without housing interest | ASSUMPTION in `advisor.js` | n/a |
 | Donor prep time by type (individual 0.5 months up to corporate 2 months), money 1 month after a yes | ASSUMPTION in `advisor.js` | n/a |
@@ -170,7 +185,9 @@ same fields (`gifts` with `year`, `city`, `county`, `amount`, `purpose`; `ties` 
 | Gap from the one-home bill, family price from budget and rate, rate slider | Working, on the published Freddie Mac rate; the bill and budget are synthetic until replaced |
 | Family budget from statute and HCD income limits | Built, waiting for the figures to be read at the source; manual budget until then |
 | Program amounts, chances, timing | Mocked (PLACEHOLDER), except CalHFA MyHome and Dream For All amounts, calculated from the price |
-| CRM connector | Mocked: a local file of synthetic donors behind the same API a real connector would use |
+| CRM connector | Mocked: a local file of synthetic donors behind the same API a real connector would use, shown as a synthetic HubSpot connection in Settings |
+| Settings: profile, connectors, preferences | Working, saved in this browser only. Gmail and HubSpot are synthetic; Givebutter and the others are tentative (not built) |
+| Map styles | Working. Esri Light gray and Satellite need Esri attribution; their terms were not checked for this prototype. CARTO basemaps were tried and now show an "API key required" watermark (checked 2026-11-07) |
 | Ranking and plan | Working on the placeholder numbers |
 | Action list, start-by dates, template drafts, Open in Gmail | Working |
 | AI drafts with Claude | Built and wired; the SDK call was checked to reach the API, but no real draft has been generated yet (no key on the build machine) |

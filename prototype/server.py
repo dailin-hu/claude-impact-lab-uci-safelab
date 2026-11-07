@@ -282,7 +282,7 @@ def crm_donors(params):
             "ties_here": tie_city or tie_county,
         }))
     return 200, {
-        "connector": {"name": "CRM (placeholder)", "status": "placeholder", "records": "SYNTHETIC", "read_only": True, "as_of": book["as_of"]},
+        "connector": {"name": "HubSpot (synthetic demo)", "status": "synthetic", "records": "SYNTHETIC", "read_only": True, "as_of": book["as_of"]},
         "SYNTHETIC": book["SYNTHETIC"],
         "donors": out,
     }
@@ -361,7 +361,9 @@ def make_draft(payload):
                deadline=int(_num(payload.get("deadline"), 1, 120, 18)),
                amount=_num(payload.get("amount"), 0, 10_000_000, 0),
                org=_txt(payload.get("org"), "[Your organization]"),
-               sender=_txt(payload.get("sender"), "[Your name]"))
+               sender=_txt(payload.get("sender"), "[Your name]"),
+               # Email and phone from the Settings page, joined for the signature. Blank keeps a placeholder.
+               contact=" · ".join(x for x in [_txt(payload.get("email"), "", 120), _txt(payload.get("phone"), "", 40)] if x) or "[Your phone number]")
     return 200, drafting.draft(kind, record, ctx)
 
 

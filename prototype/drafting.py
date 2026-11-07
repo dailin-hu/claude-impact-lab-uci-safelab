@@ -102,6 +102,7 @@ def context_lines(ctx):
         f"Money needed within: {ctx['deadline']} months",
         f"Amount to ask for (planning estimate): {money(ctx['amount'])}",
         f"Sender: {ctx['sender']}, {ctx['org']}",
+        f"Sender contact for the signature: {ctx.get('contact') or '[Your phone number]'}",
     ]
 
 
@@ -129,7 +130,7 @@ def template_email(d, ctx):
 
 Would you consider a gift of {money(ctx['amount'])} toward this home? We need to close the gap within {ctx['deadline']} months, and a gift now helps us secure the public funds that follow.
 
-I would be glad to talk or show you the site. [Your phone number]
+I would be glad to talk or show you the site. {ctx.get('contact') or '[Your phone number]'}
 
 With thanks,
 {ctx['sender']}
@@ -151,7 +152,7 @@ Could you tell us:
 Thank you,
 {ctx['sender']}
 {ctx['org']}
-[Your phone number]"""
+{ctx.get('contact') or '[Your phone number]'}"""
     return {"subject": f"Question about {s['name']} for one home in {city}", "body": body}
 
 

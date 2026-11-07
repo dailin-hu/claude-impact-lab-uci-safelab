@@ -1,7 +1,7 @@
 {
   "about": "Funding sources for the Gap Closer prototype. Names, URLs and the 'facts' lines come from lanes/3-fund-it/data/DATA-SOURCES.md (checked 2026-11-06 by the organizers). Every number inside 'placeholder' is INVENTED for the prototype and must be replaced with current program terms before anyone relies on it.",
   "as_of": "2026-11-06",
-  "placeholder_note": "PLACEHOLDER values: award_per_home, max_total, probability, prep_months (time to prepare and submit) and months_to_funds (submission to money) are made up so the advisor has something to rank. They are not program terms.",
+  "placeholder_note": "PLACEHOLDER values: award_per_home, max_total, probability, prep_months (time to prepare and submit) and months_to_funds (submission to money) are made up so the advisor has something to rank. They are not program terms. Lowered on 2026-11-07 to conservative per-home figures (roughly a third of the first guesses) so no single source looks like it closes the gap alone.",
   "sources": [
     {
       "id": "hud-home",
@@ -25,8 +25,8 @@
       "funds_open": "unknown",
       "kind": "grant or loan",
       "placeholder": {
-        "award_per_home": 30000,
-        "max_total": 300000,
+        "award_per_home": 10000,
+        "max_total": 100000,
         "probability": 0.35,
         "months_to_funds": 14,
         "counts_toward_gap": true,
@@ -53,8 +53,8 @@
       "funds_open": "unknown",
       "kind": "grant",
       "placeholder": {
-        "award_per_home": 15000,
-        "max_total": 150000,
+        "award_per_home": 5000,
+        "max_total": 50000,
         "probability": 0.3,
         "months_to_funds": 12,
         "counts_toward_gap": true,
@@ -81,8 +81,8 @@
       "kind": "grant",
       "requires": "Sweat-equity or volunteer build model",
       "placeholder": {
-        "award_per_home": 15000,
-        "max_total": 150000,
+        "award_per_home": 5000,
+        "max_total": 50000,
         "probability": 0.2,
         "months_to_funds": 16,
         "counts_toward_gap": true,
@@ -111,8 +111,8 @@
       "funds_open": "unknown",
       "kind": "loan to agencies and nonprofits",
       "placeholder": {
-        "award_per_home": 40000,
-        "max_total": 400000,
+        "award_per_home": 12000,
+        "max_total": 120000,
         "probability": 0.4,
         "months_to_funds": 12,
         "counts_toward_gap": true,
@@ -243,8 +243,8 @@
       "funds_open": "unknown",
       "kind": "grant or loan",
       "placeholder": {
-        "award_per_home": 35000,
-        "max_total": 350000,
+        "award_per_home": 10000,
+        "max_total": 100000,
         "probability": 0.3,
         "months_to_funds": 10,
         "counts_toward_gap": true,
@@ -273,7 +273,7 @@
       "funds_open": "unknown",
       "kind": "buyer down-payment loan",
       "placeholder": {
-        "award_per_home": 40000,
+        "award_per_home": 15000,
         "max_total": null,
         "probability": 0.5,
         "months_to_funds": 4,
@@ -304,7 +304,7 @@
       "funds_open": "unknown",
       "kind": "buyer down-payment help",
       "placeholder": {
-        "award_per_home": 40000,
+        "award_per_home": 15000,
         "max_total": null,
         "probability": 0.45,
         "months_to_funds": 4,
@@ -451,8 +451,8 @@
       "funds_open": "unknown",
       "kind": "bond proceeds",
       "placeholder": {
-        "award_per_home": 20000,
-        "max_total": 200000,
+        "award_per_home": 6000,
+        "max_total": 60000,
         "probability": 0.15,
         "months_to_funds": 20,
         "counts_toward_gap": true,
@@ -479,7 +479,7 @@
       "funds_open": "unknown",
       "kind": "buyer grant via member bank",
       "placeholder": {
-        "award_per_home": 25000,
+        "award_per_home": 8000,
         "max_total": null,
         "probability": 0.45,
         "months_to_funds": 6,
@@ -506,8 +506,8 @@
       "funds_open": "unknown",
       "kind": "competitive grant",
       "placeholder": {
-        "award_per_home": 30000,
-        "max_total": 500000,
+        "award_per_home": 10000,
+        "max_total": 100000,
         "probability": 0.3,
         "months_to_funds": 12,
         "counts_toward_gap": true,
@@ -533,8 +533,8 @@
       "funds_open": "unknown",
       "kind": "varies by bank",
       "placeholder": {
-        "award_per_home": 10000,
-        "max_total": 100000,
+        "award_per_home": 4000,
+        "max_total": 40000,
         "probability": 0.25,
         "months_to_funds": 6,
         "counts_toward_gap": true,

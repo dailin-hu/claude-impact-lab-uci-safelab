@@ -20,6 +20,8 @@
         corporate: 2, 'faith community': 1, 'giving circle': 1, 'community fund': 1.5,
       },
       roundTo: 500,
+      askShare: 0.5,         // ASSUMPTION: a one-home ask is half their typical past gift (past gifts often funded whole programs)
+      maxShareOfGap: 0.2,    // ASSUMPTION: no single donor is asked for more than a fifth of the gap, to spread the risk
     },
   };
 
@@ -112,7 +114,9 @@
     if (!housingInterest) prob *= W.nonHousingFactor;
     prob = Math.min(prob, W.cap);
     const basis = housing.length ? housing : gifts;
-    const ask = Math.min(Math.round(median(basis.map((g) => g.amount)) / W.roundTo) * W.roundTo, ctx.gap);
+    const typical = median(basis.map((g) => g.amount));
+    const cap = Math.max(W.roundTo, Math.floor((ctx.gap * W.maxShareOfGap) / W.roundTo) * W.roundTo);
+    const ask = Math.min(Math.max(W.roundTo, Math.round((typical * W.askShare) / W.roundTo) * W.roundTo), cap, ctx.gap);
 
     if (region.match === 'city') c.reasons.push(`Has given in ${ctx.city} ${region.gifts_in_city} time${region.gifts_in_city > 1 ? 's' : ''}.`);
     else if (region.match === 'county') c.reasons.push(`Has given in ${ctx.county}, not yet in ${ctx.city || 'this city'}.`);
@@ -120,7 +124,7 @@
     for (const tie of region.ties_here || []) c.reasons.push(`${tiePhrase(tie)} (${tie.years}). Personal ties to the area raise the chance.`);
     c.reasons.push(recent ? `Last gift ${lastYear}.` : `Last gift ${lastYear}, more than ${W.recentYears} years ago.`);
     if (!housingInterest) c.reasons.push('No housing interest on record.');
-    c.reasons.push(`Suggested ask is the median of ${housing.length ? 'their past housing gifts' : 'their past gifts'}.`);
+    c.reasons.push(`Suggested ask is half the median of ${housing.length ? 'their past housing gifts' : 'their past gifts'} ($${Math.round(typical).toLocaleString('en-US')}), capped at a fifth of the gap ($${cap.toLocaleString('en-US')}). Both rules are assumptions: edit the ask to try your own.`);
     const late = t.months > ctx.deadlineMonths;
     return { ...c, countable: ask > 0 && prob > 0, amount: ask, probability: prob, late };
   }
