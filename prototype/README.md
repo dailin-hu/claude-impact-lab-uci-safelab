@@ -29,7 +29,16 @@ step pills at the top, or the arrow keys):
 1. **Location and gap.** Start typing an address and pick from the dropdown (suggestions from
    Photon, OpenStreetMap data), or click the color map to drop a pin. The server asks the U.S.
    Census Geocoder for the city, county, state and census tract (real, live data). On the same
-   screen, for one home: the gap to close and how soon the money is needed.
+   screen, **does it pencil?** The gap is calculated, not typed: the one-home bill (cost lines,
+   subsidies, earned income) minus the family's price. The family's price is what their monthly
+   housing budget carries on a 30-year loan at the **Freddie Mac 30-year rate** (7.18% on Nov 5,
+   2026), after property tax, insurance and HOA dues. A **rate slider** shows how many dollars the
+   gap moves: the drop from 7.40% on Oct 8 cut about $5,500 from the example home's gap, and each
+   +0.25 points adds about $6,200. The **$0 equation** is on screen, and a **data dates** list shows
+   each table's date and warns when one is stale or not entered. The budget can come from the
+   statute (Health and Safety Code 50052.5 × the HCD 2026 Orange County median income) once those
+   figures are entered in `data/affordability.json`; until then it is a manual budget, labelled
+   ASSUMPTION.
 2. **Build your funding plan.** One color-coded table of everything that may apply at that place:
    public programs (blue), bonds (ochre), lenders and banks (teal), donor organizations such as
    foundations, trusts, donor-advised funds, companies and congregations (purple), and individual
@@ -110,7 +119,10 @@ Then open <http://localhost:8765>, click **Start**, and type an address and pick
 |---|---|
 | `server.py` | Serves the app. `/api/suggest` proxies Photon address suggestions (cached, at most two calls a second, California only). `/api/locate` proxies the Census Geocoder (cached, at most one call a second). `/api/funding` filters the source list to the place. `/api/crm/donors` is the placeholder CRM connector: it marks each donor's gifts and personal ties in this city and county. `POST /api/draft` drafts one email or application; `/api/ai` says whether AI drafting is on. |
 | `drafting.py` | Claude prompts and calls (Anthropic SDK, server-side fallback on refusals) and the template drafts used without a key. |
-| `data/funding-sources.json` | Programs, URLs and facts from the Lane 3 source list, plus PLACEHOLDER amounts. |
+| `data/funding-sources.json` | Programs, URLs and facts from the Lane 3 source list, plus PLACEHOLDER amounts. CalHFA MyHome and Dream For All carry a `formula` (share of price, cap) so their amounts are calculated. |
+| `data/PMMS_history.csv` | Cached copy of the Freddie Mac PMMS history CSV, downloaded once on 2026-11-07. `/api/rates` reads it; no live calls in a demo. |
+| `data/affordability.json` | HCD 2026 Orange County income figures and the HSC 50052.5 owner percentages. Every figure is `null` until someone reads it at the source and adds the date checked. |
+| `public/pencil.js` | The "does it pencil" math: price from a monthly budget, the one-home bill, gap at any rate. Plain functions. |
 | `data/crm-donors.synthetic.json` | 24 made-up donor records (10 individuals, plus donor-advised funds, trusts, family foundations, companies, a congregation, a giving circle and a community fund) with giving history and personal ties (lived, grew up, lives, based in) by city. |
 | `public/advisor.js` | The ranking rules. Every weight is labelled ASSUMPTION. |
 | `public/app.js`, `index.html`, `styles.css` | The page. Map by Leaflet and OpenStreetMap. |
@@ -129,8 +141,15 @@ same fields (`gifts` with `year`, `city`, `county`, `amount`, `purpose`; `ties` 
 | Program names, URLs, facts | `lanes/3-fund-it/data/DATA-SOURCES.md` (VERIFIED and UNVERIFIED as marked there) | 2026-11-06 |
 | CalHFA MyHome up to 3.5% (FHA) or 3% (conventional) | CalHFA homebuyer programs page, via DATA-SOURCES.md | 2026-11-06 |
 | Dream For All up to 20%, cap $150,000, drawing; funds not confirmed | calhfa.ca.gov/dream, via DATA-SOURCES.md | 2026-11-06 |
+| 30-year fixed mortgage rate, weekly (7.18% on 2026-11-05; 7.40% on 2026-10-08) | Freddie Mac PMMS, https://www.freddiemac.com/pmms/docs/PMMS_history.csv | 2026-11-07 |
+| HCD 2026 State Income Limits revised June 23, 2026, replacing May 29, 2026 | `lanes/3-fund-it/data/DATA-SOURCES.md`; Orange County figures not entered yet | 2026-11-06 |
+| Owner affordable housing cost formula | Health and Safety Code 50052.5, https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=50052.5. Not read yet: our fetch was blocked; a person must read it in a browser | not yet |
+| MyHome and Dream For All amounts = 3% and 20% (cap $150,000) of the family price | ASSUMPTION about the base: the page summaries don't say what the percentage is of. MyHome uses the lower conventional 3% | n/a |
+| Manual monthly budget ($2,235.27) | ASSUMPTION: set so the synthetic deal's $285,000 family price holds at 7.18% with the price assumptions below | n/a |
+| Property tax 1.0% a year | ASSUMPTION: "about 1% plus local assessments" per DATA-SOURCES.md; local assessments unknown | 2026-11-06 |
+| Insurance $125/month, HOA $0, down payment 3%, 30-year fixed | ASSUMPTION: team placeholders; no sourced Orange County premium was found | n/a |
 | One home per plan | ASSUMPTION: the team's scope for the prototype | n/a |
-| $95,000 default gap | ASSUMPTION: the repo's synthetic example deal | n/a |
+| Cost lines ($535,000), subsidies ($100,000), earned income ($55,000) | ASSUMPTION: the repo's synthetic example deal; they give a $95,000 gap at 7.18% | n/a |
 | 18-month default deadline | ASSUMPTION, editable | n/a |
 | Award per home, chance, prep months and months to funds for every program | ASSUMPTION: PLACEHOLDER values invented for the prototype | n/a |
 | Donor records | SYNTHETIC, invented | n/a |
@@ -148,7 +167,9 @@ same fields (`gifts` with `year`, `city`, `county`, `amount`, `purpose`; `ties` 
 |---|---|
 | Address dropdown, search and map pin to city, county, tract | Working, live Photon and Census data |
 | Which programs apply at a place | Partly working: real names and links for California and Orange County; other places show "unknown" |
-| Program amounts, chances, timing | Mocked (PLACEHOLDER) |
+| Gap from the one-home bill, family price from budget and rate, rate slider | Working, on the published Freddie Mac rate; the bill and budget are synthetic until replaced |
+| Family budget from statute and HCD income limits | Built, waiting for the figures to be read at the source; manual budget until then |
+| Program amounts, chances, timing | Mocked (PLACEHOLDER), except CalHFA MyHome and Dream For All amounts, calculated from the price |
 | CRM connector | Mocked: a local file of synthetic donors behind the same API a real connector would use |
 | Ranking and plan | Working on the placeholder numbers |
 | Action list, start-by dates, template drafts, Open in Gmail | Working |
@@ -157,8 +178,10 @@ same fields (`gifts` with `year`, `city`, `county`, `amount`, `purpose`; `ties` 
 ## Where it gets things wrong
 
 - The amounts and chances are invented, so the ranking is a demonstration of the method, not advice.
-- It does not check income limits, household size, or round dates. A program can rank high and be
-  closed this month.
+- It does not check the buyer's eligibility against income limits, or round dates. A program can
+  rank high and be closed this month.
+- Rate sensitivity holds the family's monthly budget fixed. It ignores rate locks, buydowns and
+  how lenders qualify buyers.
 - Only Santa Ana and Garden Grove have city programs on file. Anaheim, Costa Mesa and Fullerton
   are listed as unknown because their sites could not be read.
 - It treats all down-payment help as narrowing the gap, which depends on the deal structure.
@@ -166,12 +189,11 @@ same fields (`gifts` with `year`, `city`, `county`, `amount`, `purpose`; `ties` 
 ## Next steps
 
 - Replace placeholders with current NOFA terms and round dates, each with a source and date.
-- Pull income limits from the dated HCD and HUD tables and check the buyer's eligibility.
+- Enter the HCD Orange County figures and the 50052.5 percentages, then check the buyer's
+  eligibility against the same dated table.
 - Connect a real CRM read-only.
 - Gmail API drafts (`drafts.create`) instead of compose links, so drafts land in Gmail's Drafts
   folder in bulk. Needs a Google Cloud OAuth client and the user's consent; still never sends.
-- Add rate sensitivity: show how the gap moves with the Freddie Mac 30-year rate.
-
 ## Data and privacy
 
 This project uses only public or provided data. Donor records, including where donors lived, are

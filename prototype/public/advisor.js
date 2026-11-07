@@ -69,6 +69,15 @@
     if (s.funds_open === 'no') return { ...c, countable: false, why: 'Reported closed or winding down.' };
     if (!p.counts_toward_gap) return { ...c, countable: false, why: p.why_counts || 'No confirmed money yet. Research it first.' };
     let amount = p.award_per_home || 0;
+    // Programs whose award is a share of the price are calculated from the family price, not a
+    // placeholder. The share comes from the program page; the base it applies to is labelled.
+    const f = s.formula;
+    if (f && ctx.price && root.Pencil) {
+      amount = root.Pencil.formulaAmount(f, ctx.price);
+      c.calculated = true;
+      c.reasons.push(`${(f.pct_of_price * 100).toFixed(1).replace(/\.0$/, '')}% of the ${Math.round(ctx.price).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })} family price${f.cap != null ? `, capped at $${f.cap.toLocaleString('en-US')}` : ''} = $${amount.toLocaleString('en-US')}. ${f.source}`);
+      if (f.basis_note) c.reasons.push(f.basis_note);
+    }
     if (p.max_total) amount = Math.min(amount, p.max_total);
     amount = Math.min(amount, ctx.gap);
     let prob = p.probability || 0;
@@ -117,9 +126,9 @@
   }
 
   // Score everything and pick a recommended set.
-  function advise({ sources, donors, gap, deadlineMonths, place, nowYear }) {
+  function advise({ sources, donors, gap, price, deadlineMonths, place, nowYear }) {
     gap = Math.max(0, gap);
-    const ctx = { gap, deadlineMonths, nowYear, city: place && place.city, county: place && place.county };
+    const ctx = { gap, price, deadlineMonths, nowYear, city: place && place.city, county: place && place.county };
     const all = [...(sources || []).map((s) => scoreSource(s, ctx)), ...(donors || []).map((d) => scoreDonor(d, ctx))];
     for (const c of all) c.expected = c.countable ? c.amount * c.probability : 0;
 

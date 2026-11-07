@@ -216,11 +216,151 @@
     go(state.screen);
   }
 
-  // ---------- gap ----------
+  // ---------- gap: does it pencil? ----------
+  // The gap is calculated, not typed: cost to create - family price - subsidies - earned income.
+  // Family price comes from a monthly budget and the published mortgage rate (see pencil.js).
+  const P = window.Pencil;
+  const SYNTHETIC_FAMILY_PRICE = 285000; // the repo's synthetic example deal. ASSUMPTION
+  const pen = { rates: null, aff: null, mode: 'manual', published: null, price: null, gap: 95000, statute: null };
+  const fmtDate = (iso) => (iso ? new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'unknown');
+  const rate2 = (r) => `${Number(r).toFixed(2)}%`;
+  const val = (sel) => Number($(sel).value) || 0;
+
+  function assumptions(ratePct) {
+    return { ratePct: ratePct ?? val('#rate'), years: 30, taxPct: val('#tax'), insMonthly: val('#ins'), hoaMonthly: val('#hoa'), downPct: val('#down') };
+  }
+  function deal() {
+    const costs = {};
+    $$('[data-cost]').forEach((el) => { costs[el.dataset.cost] = Number(el.value) || 0; });
+    return { costs, subsidies: val('#subsidies'), earned: val('#earned') };
+  }
+  function monthlyBudget() {
+    if (pen.mode === 'statute') {
+      pen.statute = P.statuteBudget(pen.aff, $('#hh-size').value, $('#hh-tier').value);
+      if (pen.statute) { $('#budget').value = Math.round(pen.statute.monthly); return pen.statute.monthly; }
+    }
+    pen.statute = null;
+    return val('#budget');
+  }
+
+  function setMode(mode) {
+    pen.mode = mode;
+    $$('#budget-mode [data-mode]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.mode === mode)));
+    $('#statute-fields').hidden = mode !== 'statute';
+    $('#budget').readOnly = mode === 'statute';
+    renderPencil();
+  }
+
+  async function loadPencilData() {
+    const [rates, aff] = await Promise.all([
+      getJSON('/api/rates').catch(() => null),
+      getJSON('/api/affordability').catch(() => null),
+    ]);
+    pen.rates = rates;
+    pen.aff = aff;
+    pen.published = rates ? rates.latest.rate : null;
+    $('#rate').value = pen.published ?? 7;
+    // Manual default: the budget that makes the synthetic deal's family price hold at today's rate.
+    $('#budget').value = P.budgetFromPrice(SYNTHETIC_FAMILY_PRICE, assumptions()).toFixed(2);
+    const ready = P.statuteReady(aff);
+    const sb = $('#budget-mode [data-mode="statute"]');
+    sb.disabled = !ready;
+    if (aff) {
+      $('#hh-size').replaceChildren(...aff.income_limits.household_sizes.map((s) => h('option', { value: s, text: `${s} ${s > 1 ? 'people' : 'person'}` })));
+      $('#hh-size').value = '4';
+      $('#hh-tier').replaceChildren(...aff.statute.owner_tiers.map((t) => h('option', { value: t.id, text: t.label })));
+      $('#hh-tier').value = 'low';
+    }
+    setMode(ready ? 'statute' : 'manual');
+  }
+
+  function renderPencil() {
+    const a = assumptions();
+    const monthly = monthlyBudget();
+    const d = deal();
+    const price = P.priceFromBudget(monthly, a);
+    const b = P.bill(d, price);
+    pen.price = price;
+    pen.gap = b.gap;
+
+    $('#cost-total').textContent = usd.format(b.cost);
+    $('#family-price').textContent = usd.format(price);
+    $('#gap-line').textContent = b.gap >= 0 ? usd.format(b.gap) : `${usd.format(-b.gap)} surplus`;
+    $('#rate-val').textContent = rate2(a.ratePct);
+    $('#rate-reset').hidden = pen.published == null || Math.abs(a.ratePct - pen.published) < 0.005;
+
+    // Where the budget comes from.
+    const aff = pen.aff;
+    $('#statute-note').textContent = P.statuteReady(aff)
+      ? `HSC 50052.5 (checked ${fmtDate(aff.statute.checked)}) and the ${aff.income_limits.name}, ${aff.income_limits.county} (revised ${fmtDate(aff.income_limits.revised)}).`
+      : 'Statute mode needs the Orange County median income from the HCD 2026 table and the owner percentages in Health and Safety Code 50052.5, entered in data/affordability.json with the date checked. Until then the budget is manual.';
+    $('#budget-note').replaceChildren(...(pen.statute
+      ? [`Statute: ${pen.statute.tier.cost_pct}% × ${pen.statute.tier.median_pct}% of the ${aff.income_limits.county} median for ${$('#hh-size').value} people (${usd.format(pen.statute.median)}) ÷ 12 = ${usd.format(pen.statute.monthly)} a month.`]
+      : [h('span', { class: 'chip chip-assume', text: 'Assumption' }), ` Set so the synthetic deal's ${usd.format(SYNTHETIC_FAMILY_PRICE)} family price holds at the published rate with the price assumptions below. Replace it with the family's real budget.`]));
+
+    // Rate sensitivity, holding the family's monthly budget fixed.
+    const r = pen.rates;
+    $('#rate-src').replaceChildren(...(r
+      ? ['Freddie Mac PMMS 30-year fixed: ', h('b', { text: rate2(r.latest.rate) }), ` on ${fmtDate(r.latest.date)}. `, h('a', { href: r.page, target: '_blank', rel: 'noopener', text: 'freddiemac.com/pmms' }), ` · cached ${fmtDate(r.cached_on)}`]
+      : [h('span', { class: 'chip chip-assume', text: 'Assumption' }), ' The rate file did not load, so 7% is a placeholder. Set the rate yourself.']));
+    const at = (x) => P.gapAtRate(d, monthly, a, x);
+    const step = at(a.ratePct + 0.25) - at(a.ratePct);
+    const lines = [];
+    if (r) {
+      const now = at(r.latest.rate), then = at(r.month_ago.rate);
+      const diff = now - then;
+      lines.push(`At ${rate2(r.month_ago.rate)} on ${fmtDate(r.month_ago.date)} the gap was ${usd.format(then)}. The ${diff <= 0 ? 'drop' : 'rise'} to ${rate2(r.latest.rate)} ${diff <= 0 ? 'cut' : 'added'} ${usd.format(Math.abs(diff))} ${diff <= 0 ? 'from' : 'to'} the gap for this home.`);
+      if (Math.abs(a.ratePct - r.latest.rate) >= 0.005) {
+        const off = b.gap - now;
+        lines.push(`At ${rate2(a.ratePct)} the gap is ${usd.format(b.gap)}: ${usd.format(Math.abs(off))} ${off >= 0 ? 'more' : 'less'} than at the published rate.`);
+      }
+    }
+    lines.push(`Each +0.25 points adds about ${usd.format(step)} to the gap.`);
+    $('#rate-move').replaceChildren(...lines.map((t) => h('span', { text: t })));
+
+    // The $0 equation, on screen.
+    const fund = Math.max(0, b.gap);
+    $('#equation').replaceChildren(
+      h('span', { class: 'label', text: 'The equation for this home' }),
+      h('p', {},
+        h('b', { text: usd.format(price) }), ' family + ', h('b', { text: usd.format(b.subsidies) }), ' subsidies + ',
+        h('b', { text: usd.format(b.earned) }), ' earned + ', h('b', { class: 'eq-gap', text: usd.format(fund) }), ' fundraising − ',
+        h('b', { text: usd.format(b.cost) }), ' cost = ', h('b', { text: usd.format(price + b.subsidies + b.earned + fund - b.cost) })),
+      b.gap < 0 ? h('p', { class: 'caption', text: 'This home pencils without fundraising at these numbers.' }) : '');
+
+    renderDates();
+    recompute();
+  }
+
+  function renderDates() {
+    const today = new Date();
+    const ageDays = (iso) => (iso ? (today - new Date(`${iso}T12:00:00`)) / 864e5 : Infinity);
+    const items = [];
+    const r = pen.rates;
+    if (r) {
+      const stale = ageDays(r.latest.date) > 14; // published weekly
+      items.push({ name: 'Mortgage rate: Freddie Mac PMMS', url: r.page, text: `Latest ${fmtDate(r.latest.date)}, cached ${fmtDate(r.cached_on)}`, warn: stale ? 'Stale: the series updates weekly. Refresh data/PMMS_history.csv.' : null });
+    } else {
+      items.push({ name: 'Mortgage rate', text: 'Unknown: the rate file did not load.', warn: 'Not loaded.' });
+    }
+    const aff = pen.aff;
+    if (aff) {
+      const il = aff.income_limits;
+      items.push({ name: il.name, url: il.url, text: `Revised ${fmtDate(il.revised)}, replaces the ${fmtDate(il.replaces)} version`, warn: il.checked ? (ageDays(il.revised) > 365 ? 'More than a year old: look for a newer revision.' : null) : `${il.county} figures not entered yet.` });
+      items.push({ name: aff.home_limits.name, url: aff.home_limits.url, text: `Effective ${fmtDate(aff.home_limits.effective)}. A separate table for HOME-funded buyers, not used in the price yet.` });
+      items.push({ name: 'Health and Safety Code 50052.5', url: aff.statute.url, text: aff.statute.checked ? `Checked ${fmtDate(aff.statute.checked)}` : 'Owner cost percentages', warn: aff.statute.checked ? null : 'Not read yet: figures not entered.' });
+    }
+    items.push({ name: 'Cost lines, subsidies, earned income', text: 'Synthetic example deal (lanes/3-fund-it/data). Every number is an assumption until you enter your pro forma.', warn: null });
+    $('#data-dates').replaceChildren(...items.map((it) => h('li', { class: it.warn ? 'warn' : '' },
+      it.url ? h('a', { href: it.url, target: '_blank', rel: 'noopener', text: it.name }) : h('b', { text: it.name }),
+      h('span', { text: ` · ${it.text}` }),
+      it.warn ? h('span', { class: 'warn-text', text: ` ${it.warn}` }) : '')));
+  }
+
   function readGap() {
-    const gap = Math.max(0, Number($('#gap').value) || 0);
+    const gap = Math.max(0, Math.round(pen.gap || 0));
     const deadline = Math.max(1, Math.round(Number($('#deadline').value) || 18));
-    return { gap, deadline };
+    return { gap, deadline, price: pen.price };
   }
 
   function recompute() {
@@ -229,7 +369,7 @@
     $('#goal-time').textContent = `Needed within ${g.deadline} months from today.`;
     if (!state.researched) { updateHint(); return; }
     state.advice = window.Advisor.advise({
-      sources: state.sources, donors: state.donors, gap: g.gap,
+      sources: state.sources, donors: state.donors, gap: g.gap, price: g.price,
       deadlineMonths: g.deadline, place: state.place, nowYear: NOW_YEAR,
     });
     if (!state.touched) {
@@ -257,6 +397,7 @@
       if (s.source_status === 'VERIFIED') chips.push(h('span', { class: 'chip chip-solid' }, icon('check-circle'), 'Page checked'));
       else if (s.source_status === 'PLACEHOLDER') chips.push(h('span', { class: 'chip chip-placeholder', text: 'Placeholder' }));
       else chips.push(h('span', { class: 'chip' }, icon('question-mark-circle'), 'Unverified'));
+      if (c.calculated) chips.push(h('span', { class: 'chip chip-calc', text: `${(s.formula.pct_of_price * 100).toFixed(1).replace(/\.0$/, '')}% of price` }));
       if (s.funds_open === 'no') chips.push(h('span', { class: 'chip', text: 'Closed' }));
       else if (s.funds_open === 'unknown') chips.push(h('span', { class: 'chip', text: 'Funds open?' }));
     }
@@ -444,7 +585,8 @@
     }
     parts.push(h('p', { class: 'body-sm' }, h('b', { text: 'Next step: ' }), c.nextStep));
     if (c.url) parts.push(h('a', { class: 'ext', href: c.url, target: '_blank', rel: 'noopener' }, 'Open source', icon('arrow-top-right-on-square')));
-    if (c.kind !== 'donor') parts.push(h('p', { class: 'caption muted' }, h('span', { class: 'chip chip-placeholder', text: 'Placeholder' }), ' Amount, chance and timing are invented for the prototype.'));
+    if (c.kind !== 'donor') parts.push(h('p', { class: 'caption muted' }, h('span', { class: 'chip chip-placeholder', text: 'Placeholder' }),
+      c.calculated ? ' The amount is calculated from the family price and the program page (see the reasons). Chance and timing are invented for the prototype.' : ' Amount, chance and timing are invented for the prototype.'));
     if (c.countable) {
       const inPlan = state.selected.has(c.id);
       parts.push(h('button', { class: `btn btn-sm ${inPlan ? 'btn-outline' : 'btn-dark'}`, type: 'button', onclick: () => toggle(c.id, !inPlan) }, inPlan ? 'Remove from plan' : 'Add to plan'));
@@ -711,7 +853,11 @@
     if (address) locate({ address });
   });
   $('#sample-btn').addEventListener('click', () => { input.value = SAMPLE_ADDRESS; $('#search-form').requestSubmit(); });
-  ['#gap', '#deadline'].forEach((id) => $(id).addEventListener('input', recompute));
+  $('#deadline').addEventListener('input', recompute);
+  ['#budget', '#rate', '#tax', '#ins', '#hoa', '#down', '#subsidies', '#earned', '#hh-size', '#hh-tier', '[data-cost]']
+    .forEach((sel) => $$(sel).forEach((el) => el.addEventListener('input', renderPencil)));
+  $$('#budget-mode [data-mode]').forEach((b) => b.addEventListener('click', () => { if (!b.disabled) setMode(b.dataset.mode); }));
+  $('#rate-reset').addEventListener('click', () => { $('#rate').value = pen.published; renderPencil(); });
   $('#sort').addEventListener('change', (e) => { state.sort = e.target.value; renderTable(); });
   $('#drawer-close').addEventListener('click', closeDrawer);
   $('#use-rec').addEventListener('click', useRecommended);
@@ -726,5 +872,6 @@
   $('.stage').addEventListener('scroll', (e) => { e.target.scrollLeft = 0; e.target.scrollTop = 0; });
   window.addEventListener('resize', () => { $('#track').style.transform = `translateX(${-100 * state.screen}%)`; });
   recompute();
+  loadPencilData();
   go(0);
 })();

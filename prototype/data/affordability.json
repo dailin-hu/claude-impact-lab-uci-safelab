@@ -1,0 +1,40 @@
+{
+  "about": "What the family can afford, from public sources. Fill every null from the source itself, add the date you checked it, and never estimate. Until the Orange County row and the statute figures are entered, the app uses a manual monthly budget labelled ASSUMPTION.",
+  "income_limits": {
+    "name": "HCD 2026 State Income Limits",
+    "county": "Orange County",
+    "url": "https://www.hcd.ca.gov/sites/default/files/docs/grants-and-funding/income-limits-2026.pdf",
+    "revised": "2026-06-23",
+    "replaces": "2026-05-29",
+    "revision_source": "lanes/3-fund-it/data/DATA-SOURCES.md, checked 2026-11-06: the June 23, 2026 memo replaces the May 29, 2026 version.",
+    "checked": null,
+    "household_sizes": [1, 2, 3, 4, 5, 6, 7, 8],
+    "median_income_by_size": { "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null },
+    "limits_by_size": {
+      "extremely_low": { "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null },
+      "very_low": { "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null },
+      "low": { "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null },
+      "moderate": { "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null }
+    }
+  },
+  "home_limits": {
+    "name": "HCD 2026 State HOME Income Limits",
+    "url": "https://www.hcd.ca.gov/sites/default/files/docs/grants-and-funding/2026-california-HOME-income-limits_0.pdf",
+    "effective": "2026-06-01",
+    "note": "A separate table for HOME-funded buyers. Not used in the price math yet."
+  },
+  "statute": {
+    "section": "California Health and Safety Code 50052.5 (owner-occupied affordable housing cost)",
+    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=50052.5",
+    "checked": null,
+    "applies_to": "Housing assisted on or after January 1, 1991 (the statute has a separate rule for earlier housing; confirm which applies).",
+    "owner_tiers": [
+      { "id": "extremely_low", "label": "Extremely low income", "median_pct": null, "cost_pct": null, "quote": null },
+      { "id": "very_low", "label": "Very low income", "median_pct": null, "cost_pct": null, "quote": null },
+      { "id": "low", "label": "Lower income", "median_pct": null, "cost_pct": null, "quote": null },
+      { "id": "moderate", "label": "Moderate income", "median_pct": null, "cost_pct": null, "quote": null }
+    ],
+    "household_size_rule": null,
+    "housing_cost_includes": null
+  }
+}

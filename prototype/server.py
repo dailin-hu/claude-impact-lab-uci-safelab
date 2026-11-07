@@ -7,6 +7,8 @@ Serves the web app in ./public and a few small JSON endpoints:
   GET /api/suggest?q=...             address suggestions while typing (Photon, OpenStreetMap)
   GET /api/funding?state=&county=&city=   funding sources for that place (placeholder data)
   GET /api/crm/donors?state=&county=&city= placeholder CRM connector (synthetic donors)
+  GET /api/rates                     Freddie Mac 30-year rate, from the cached PMMS CSV in data/
+  GET /api/affordability             income limits and statute figures entered in data/affordability.json
   GET /api/ai                        whether AI drafting is available
   POST /api/draft                    AI or template draft of an email or application (never sent)
 
@@ -286,7 +288,43 @@ def crm_donors(params):
     }
 
 
+PMMS_URL = "https://www.freddiemac.com/pmms/docs/PMMS_history.csv"
+
+
+def rates(params):
+    """Freddie Mac PMMS 30-year fixed rate, from a cached copy of the public CSV in data/.
+    Read once from disk; no live calls during a demo."""
+    rows = []
+    with open(os.path.join(DATA, "PMMS_history.csv"), encoding="utf-8") as f:
+        next(f)  # header: date,pmms30,...
+        for line in f:
+            cells = line.strip().split(",")
+            if len(cells) < 2 or not cells[1]:
+                continue
+            m, d, y = (int(x) for x in cells[0].split("/"))
+            rows.append({"date": f"{y:04d}-{m:02d}-{d:02d}", "rate": float(cells[1])})
+    rows.sort(key=lambda r: r["date"])
+    latest = rows[-1]
+    # The observation about four weeks earlier, for "how much did the gap move this month".
+    month_ago = rows[-5] if len(rows) >= 5 else rows[0]
+    cached = datetime.fromtimestamp(os.path.getmtime(os.path.join(DATA, "PMMS_history.csv")), timezone.utc)
+    return 200, {
+        "series": "Freddie Mac Primary Mortgage Market Survey, 30-year fixed (pmms30)",
+        "url": PMMS_URL,
+        "page": "https://www.freddiemac.com/pmms",
+        "cached_on": cached.strftime("%Y-%m-%d"),
+        "latest": latest,
+        "month_ago": month_ago,
+        "last_52": rows[-52:],
+    }
+
+
+def affordability(params):
+    return 200, load("affordability.json")
+
+
 ROUTES = {"/api/locate": locate, "/api/suggest": suggest, "/api/funding": funding, "/api/crm/donors": crm_donors,
+          "/api/rates": rates, "/api/affordability": affordability,
           "/api/ai": lambda params: (200, drafting.ai_status())}
 
 

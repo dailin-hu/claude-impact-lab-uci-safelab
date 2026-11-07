@@ -139,6 +139,12 @@
       "funds_open": "unknown",
       "kind": "buyer junior loan",
       "stack_group": "calhfa-buyer",
+      "formula": {
+        "pct_of_price": 0.03,
+        "cap": null,
+        "source": "CalHFA homebuyer programs page: up to 3% (conventional) or 3.5% (FHA). Via lanes/3-fund-it/data/DATA-SOURCES.md, checked 2026-11-06.",
+        "basis_note": "ASSUMPTION: uses the lower 3% (conventional) and applies it to the price; the page summary does not say what the percentage is of. Confirm with a CalHFA lender."
+      },
       "placeholder": {
         "award_per_home": 9000,
         "max_total": null,
@@ -170,6 +176,12 @@
       "funds_open": "unknown",
       "kind": "buyer shared appreciation loan",
       "stack_group": "calhfa-buyer",
+      "formula": {
+        "pct_of_price": 0.2,
+        "cap": 150000,
+        "source": "calhfa.ca.gov/dream: up to 20%, not to exceed $150,000. Via lanes/3-fund-it/data/DATA-SOURCES.md, checked 2026-11-06. Funds not confirmed.",
+        "basis_note": "ASSUMPTION: applies the 20% to the price; the page summary does not say what the percentage is of."
+      },
       "placeholder": {
         "award_per_home": 50000,
         "max_total": null,

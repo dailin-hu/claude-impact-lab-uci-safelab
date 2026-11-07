@@ -82,16 +82,76 @@
 
             <div class="divider"></div>
 
-            <h3 class="heading-sm">How Big Is The Gap For This Home?</h3>
+            <h3 class="heading-sm">Does It Pencil? The One-Home Bill</h3>
+            <p class="caption muted">The family's price is capped by income, so their monthly budget and today's mortgage rate set it. The gap is what is left. Defaults are the repo's synthetic example deal: <span class="chip chip-assume">Assumption</span> until you enter your pro forma.</p>
+
+            <div class="bill">
+              <fieldset class="bill-col">
+                <legend class="label">Cost to create</legend>
+                <label class="bill-row"><span>Land and building</span><input class="input input-sm" type="number" step="1000" min="0" data-cost="land" value="360000"></label>
+                <label class="bill-row"><span>Time costs while waiting</span><input class="input input-sm" type="number" step="1000" min="0" data-cost="time" value="85000"></label>
+                <label class="bill-row"><span>Construction and repairs</span><input class="input input-sm" type="number" step="1000" min="0" data-cost="build" value="40000"></label>
+                <label class="bill-row"><span>Fees, design, legal, sales</span><input class="input input-sm" type="number" step="1000" min="0" data-cost="fees" value="50000"></label>
+                <div class="bill-row bill-total"><span>Total</span><b id="cost-total">—</b></div>
+              </fieldset>
+              <fieldset class="bill-col">
+                <legend class="label">Paid by</legend>
+                <div class="bill-row"><span>Family price <span class="chip chip-calc">Calculated</span></span><b id="family-price">—</b></div>
+                <label class="bill-row"><span>Committed public subsidies</span><input class="input input-sm" type="number" step="1000" min="0" id="subsidies" value="100000"></label>
+                <label class="bill-row"><span>Rent earned while waiting</span><input class="input input-sm" type="number" step="1000" min="0" id="earned" value="55000"></label>
+                <div class="bill-row bill-total"><span>Gap to fundraise</span><b id="gap-line">—</b></div>
+              </fieldset>
+            </div>
+
+            <div class="family">
+              <span class="label">What the family can pay</span>
+              <div class="seg" id="budget-mode" role="radiogroup" aria-label="Where the monthly budget comes from">
+                <button type="button" role="radio" data-mode="statute">Statute + HCD table</button>
+                <button type="button" role="radio" data-mode="manual">Manual budget</button>
+              </div>
+              <div class="statute-fields" id="statute-fields" hidden>
+                <label class="field"><span class="label">Household size</span><select class="input select" id="hh-size"></select></label>
+                <label class="field"><span class="label">Income tier</span><select class="input select" id="hh-tier"></select></label>
+              </div>
+              <p class="caption muted" id="statute-note"></p>
+              <label class="field"><span class="label">Monthly housing budget (USD)</span><input class="input" id="budget" type="number" min="0" step="any"></label>
+              <p class="caption muted" id="budget-note"></p>
+
+              <div class="rate">
+                <div class="rate-top"><label class="label" for="rate">30-year mortgage rate</label><b class="rate-val" id="rate-val">—</b></div>
+                <input type="range" id="rate" min="4" max="9" step="0.01" aria-describedby="rate-src">
+                <p class="caption muted" id="rate-src">Loading the Freddie Mac rate…</p>
+                <p class="rate-move" id="rate-move" aria-live="polite"></p>
+                <button class="link-btn" type="button" id="rate-reset" hidden>Back to the published rate</button>
+              </div>
+
+              <details class="assume">
+                <summary class="caption">Price assumptions (tax, insurance, HOA, down payment)</summary>
+                <div class="assume-grid">
+                  <label class="field"><span class="label">Property tax %/yr</span><input class="input input-sm" id="tax" type="number" step="0.05" min="0" value="1.0"></label>
+                  <label class="field"><span class="label">Insurance $/mo</span><input class="input input-sm" id="ins" type="number" step="5" min="0" value="125"></label>
+                  <label class="field"><span class="label">HOA $/mo</span><input class="input input-sm" id="hoa" type="number" step="5" min="0" value="0"></label>
+                  <label class="field"><span class="label">Down payment %</span><input class="input input-sm" id="down" type="number" step="0.5" min="0" max="50" value="3"></label>
+                </div>
+                <p class="caption muted"><span class="chip chip-assume">Assumption</span> Tax: about 1% plus local assessments, which are unknown here (the Lane 3 data list suggests this; OC Treasurer-Tax Collector, tax.ocgov.com, has the bill for a real parcel). Insurance, HOA and down payment are team placeholders: no sourced Orange County premium was found. 30-year fixed loan, to match the rate series.</p>
+              </details>
+            </div>
+
+            <div class="equation" id="equation" aria-live="polite"></div>
+
             <div class="gap-inputs">
-              <div class="field"><label class="label" for="gap">Gap to close (USD)</label><input class="input" id="gap" type="number" min="0" step="1000" value="95000"></div>
               <div class="field"><label class="label" for="deadline">Money needed within (months)</label><input class="input" id="deadline" type="number" min="1" max="60" step="1" value="18"></div>
             </div>
-            <p class="caption muted"><span class="chip chip-assume">Assumption</span> One home. $95,000 is the repo's synthetic example deal; use your pro forma's number. Each source's time to money is the time to prepare that application or ask plus its wait for funds, counted from today. Money that lands after your deadline counts half.</p>
+            <p class="caption muted"><span class="chip chip-assume">Assumption</span> 18 months is a placeholder. Each source's time to money is the time to prepare that application or ask plus its wait for funds, counted from today. Money that lands after your deadline counts half.</p>
             <div class="goal">
               <span class="label">Goal: gap to close for one home</span>
               <span class="goal-num" id="gap-total">$95,000</span>
               <span class="caption muted" id="goal-time">Needed within 18 months from today.</span>
+            </div>
+
+            <div class="dates">
+              <span class="label">Data dates</span>
+              <ul id="data-dates"></ul>
             </div>
           </div>
         </div>
@@ -185,6 +245,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="icons.js"></script>
+  <script src="pencil.js"></script>
   <script src="advisor.js"></script>
   <script src="app.js"></script>
 </body>

@@ -181,6 +181,37 @@ button { font-family: inherit; }
 .loc-facts div { display: grid; }
 .loc-facts dt { font-size: 12px; color: var(--ink-muted); }
 .loc-facts dd { margin: 0; font-size: 14px; font-weight: 500; }
+/* one-home bill */
+.bill { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.bill-col { border: 1px solid var(--border); border-radius: var(--radius-sm); margin: 0; padding: var(--space-2) var(--space-3) var(--space-3); display: grid; gap: var(--space-2); min-width: 0; }
+.bill-col legend { padding: 0 var(--space-1); }
+.bill-row { display: grid; grid-template-columns: minmax(0, 1fr) 104px; align-items: center; gap: var(--space-2); font-size: 13px; line-height: 1.3; }
+.bill-row b { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.bill-total { border-top: 1px solid var(--border); padding-top: var(--space-2); font-weight: 600; }
+.input-sm { height: 32px; font-size: 14px; padding: 0 var(--space-2); text-align: right; }
+.chip-calc { border-color: var(--g-public); color: var(--ink); font-size: 11px; padding: 2px var(--space-2); }
+.family { display: grid; gap: var(--space-3); }
+.seg { display: inline-grid; grid-auto-flow: column; border: 1px solid var(--border-strong); border-radius: var(--radius-full); overflow: hidden; justify-self: start; }
+.seg button { background: none; border: 0; padding: var(--space-1) var(--space-3); font: 500 13px var(--sans); color: var(--ink-secondary); cursor: pointer; }
+.seg button[aria-checked="true"] { background: var(--action); color: var(--on-action); }
+.seg button:disabled { opacity: 0.45; cursor: not-allowed; }
+.statute-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.statute-fields .select { width: 100%; height: 40px; }
+.rate { display: grid; gap: var(--space-1); }
+.rate-top { display: flex; justify-content: space-between; align-items: baseline; }
+.rate-val { font-family: var(--display); font-size: 22px; font-variant-numeric: tabular-nums; }
+.rate input[type="range"] { width: 100%; accent-color: var(--action); }
+.rate-move { margin: var(--space-1) 0 0; display: grid; gap: var(--space-1); font-size: 13px; line-height: 1.45; border-left: 3px solid var(--g-public); padding-left: var(--space-3); }
+.assume summary { cursor: pointer; color: var(--ink-secondary); }
+.assume-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); margin: var(--space-2) 0; }
+.equation { background: var(--surface-hover); border-radius: var(--radius-sm); padding: var(--space-3) var(--space-4); display: grid; gap: var(--space-1); }
+.equation p { margin: 0; font-size: 14px; line-height: 1.6; font-variant-numeric: tabular-nums; }
+.equation .eq-gap { color: var(--alert); }
+.dates { display: grid; gap: var(--space-1); }
+.dates ul { margin: 0; padding-left: var(--space-4); display: grid; gap: var(--space-1); font-size: 12px; line-height: 1.45; color: var(--ink-secondary); }
+.dates a { color: var(--ink); }
+.dates .warn-text { color: var(--alert); font-weight: 600; }
+@media (max-width: 520px) { .bill, .statute-fields { grid-template-columns: 1fr; } .assume-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .gap-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); align-items: end; }
 .field { display: grid; gap: var(--space-1); align-content: start; }
 .goal { border-left: 3px solid var(--alert); padding: var(--space-2) 0 var(--space-2) var(--space-4); display: grid; gap: var(--space-1); }
