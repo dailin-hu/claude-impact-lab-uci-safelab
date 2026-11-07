@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gap Closer</title>
+  <link rel="icon" href="assets/safelab-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <button class="nav-brand" type="button" data-go="0" aria-label="Back to start">
+      <img class="logo-light" src="assets/safelab-lockup.png" alt="SafeLab AI Engineering" width="116">
+      <img class="logo-dark" src="assets/safelab-lockup-white.png" alt="SafeLab AI Engineering" width="116">
+    </button>
+    <ol class="stepper" id="stepper" aria-label="Steps">
+      <li><button type="button" data-go="1"><span class="num">01</span><span class="txt">Location and gap</span></button></li>
+      <li><button type="button" data-go="2"><span class="num">02</span><span class="txt">Build your funding plan</span></button></li>
+      <li><button type="button" data-go="3"><span class="num">03</span><span class="txt">Take action</span></button></li>
+    </ol>
+    <span class="pill-tag">Prototype</span>
+  </nav>
+
+  <main class="stage">
+    <div class="track" id="track">
+
+      <!-- Start -->
+      <section class="screen screen-hero" data-screen="0" aria-label="Start">
+        <div class="hero">
+          <div class="hero-photo" aria-hidden="true"></div>
+          <div class="hero-inner">
+            <div class="hero-copy">
+              <span class="label on-dark">Gap Closer · Lane 3 Fund it</span>
+              <h1 class="hero-title">Close The Funding Gap On Your Next Home</h1>
+            </div>
+            <div class="hero-side">
+              <p class="hero-summary">Place the home, then compare every federal, state, county and city program, bond, lender and past donor that could help, and build the mix that covers your gap.</p>
+              <button class="btn btn-light btn-start" type="button" id="start-btn"><span>Start</span><span class="arrow-disc" data-icon="arrow-right"></span></button>
+              <p class="hero-fine">Prototype. Program amounts are placeholders and donor records are synthetic. Not financial or legal advice.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 1: location and gap -->
+      <section class="screen" data-screen="1" aria-label="Step 1, location and gap">
+        <div class="s1">
+          <div class="card map-card">
+            <div id="map" role="application" aria-label="Map. Click to place the home." tabindex="0"></div>
+            <p class="map-hint caption" id="map-hint">Click the map to place the home.</p>
+          </div>
+          <div class="s1-side scroll">
+            <header class="screen-head">
+              <span class="mono-label">Step 01 / 03</span>
+              <h2 class="screen-title">Where Is The Home?</h2>
+            </header>
+            <form class="search-row" id="search-form" autocomplete="off">
+              <div class="combo">
+                <label class="sr-only" for="address">Home address</label>
+                <input class="input" id="address" type="text" placeholder="Start typing an address" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest-list" required>
+                <ul class="suggest" id="suggest-list" role="listbox" aria-label="Address suggestions" hidden></ul>
+              </div>
+              <button class="btn btn-dark btn-sm" type="submit" id="search-btn">Find</button>
+            </form>
+            <p class="caption muted">Pick a suggestion, or click the map. <button class="link-btn" type="button" id="sample-btn">Use a sample address</button></p>
+            <div id="loc-error" class="error-box" hidden></div>
+            <div class="loc" id="loc-result" hidden>
+              <p class="loc-title" id="loc-title">—</p>
+              <dl class="loc-facts">
+                <div><dt>City</dt><dd id="loc-city">—</dd></div>
+                <div><dt>County</dt><dd id="loc-county">—</dd></div>
+                <div><dt>Tract</dt><dd id="loc-tract">—</dd></div>
+                <div><dt>State</dt><dd id="loc-state">—</dd></div>
+              </dl>
+              <p class="caption muted" id="loc-source">—</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3 class="heading-sm">How Big Is The Gap For This Home?</h3>
+            <div class="gap-inputs">
+              <div class="field"><label class="label" for="gap">Gap to close (USD)</label><input class="input" id="gap" type="number" min="0" step="1000" value="95000"></div>
+              <div class="field"><label class="label" for="deadline">Money needed within (months)</label><input class="input" id="deadline" type="number" min="1" max="60" step="1" value="18"></div>
+            </div>
+            <p class="caption muted"><span class="chip chip-assume">Assumption</span> One home. $95,000 is the repo's synthetic example deal; use your pro forma's number. Each source's time to money is the time to prepare that application or ask plus its wait for funds, counted from today. Money that lands after your deadline counts half.</p>
+            <div class="goal">
+              <span class="label">Goal: gap to close for one home</span>
+              <span class="goal-num" id="gap-total">$95,000</span>
+              <span class="caption muted" id="goal-time">Needed within 18 months from today.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 2: compare and build -->
+      <section class="screen" data-screen="2" aria-label="Step 2, build your funding plan">
+        <div class="s2">
+          <div class="s2-main">
+            <header class="s2-head">
+              <div class="screen-head">
+                <span class="mono-label">Step 02 / 03</span>
+                <h2 class="screen-title">Build Your Funding Plan</h2>
+                <p class="body-sm muted" id="cmp-summary">—</p>
+              </div>
+              <div class="toolbar">
+                <div class="filters" id="filters" role="tablist" aria-label="Filter by type"></div>
+                <div class="toolbar-right">
+                  <label class="sort"><span class="label">Sort</span>
+                    <select class="input select" id="sort">
+                      <option value="expected">Expected value</option>
+                      <option value="amount">Amount</option>
+                      <option value="probability">Chance</option>
+                      <option value="months">Fastest money</option>
+                    </select>
+                  </label>
+                  <button class="btn btn-outline btn-xs" type="button" id="use-rec">Use recommended</button>
+                  <button class="btn btn-outline btn-xs" type="button" id="clear-all">Clear all</button>
+                </div>
+              </div>
+            </header>
+            <div class="table-wrap scroll">
+              <table class="cmp">
+                <thead>
+                  <tr>
+                    <th scope="col" class="c-check"><span class="sr-only">In plan</span></th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Why it fits</th>
+                    <th scope="col" class="num">Amount</th>
+                    <th scope="col" class="num">Chance</th>
+                    <th scope="col">Expected value</th>
+                    <th scope="col" class="num">Months</th>
+                  </tr>
+                </thead>
+                <tbody id="cmp-body"></tbody>
+              </table>
+            </div>
+            <p class="caption muted s2-foot"><span class="chip chip-placeholder">Placeholder</span> Program amounts, chances and timing are invented for the prototype. Expected value = amount × chance. Tick a row to add it to your plan, edit an amount to try a different ask, and click a name for details.</p>
+          </div>
+          <aside class="panel s2-summary scroll" id="summary" aria-live="polite"></aside>
+          <aside class="drawer" id="drawer" aria-label="Source details" hidden>
+            <button class="drawer-close" type="button" id="drawer-close" aria-label="Close details">×</button>
+            <div class="drawer-body scroll" id="drawer-body"></div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Step 3: take action -->
+      <section class="screen" data-screen="3" aria-label="Step 3, take action">
+        <div class="s3">
+          <div class="s3-list">
+            <header class="screen-head">
+              <span class="mono-label">Step 03 / 03</span>
+              <h2 class="screen-title">Take Action</h2>
+              <p class="body-sm muted" id="act-summary">—</p>
+            </header>
+            <div class="sender">
+              <div class="field"><label class="label" for="org">Your organization</label><input class="input" id="org" type="text" placeholder="[Your organization]" autocomplete="organization"></div>
+              <div class="field"><label class="label" for="sender">Signed by</label><input class="input" id="sender" type="text" placeholder="[Your name]" autocomplete="name"></div>
+            </div>
+            <div class="toolbar">
+              <button class="btn btn-dark btn-sm" type="button" id="draft-all"><span class="btn-ic" data-icon="sparkles"></span>Draft all emails</button>
+              <span class="ai-status" id="ai-status">Checking AI drafting…</span>
+            </div>
+            <div id="actions"></div>
+          </div>
+          <aside class="card draft-panel" id="draft-panel" aria-live="polite"></aside>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="controls" id="controls">
+    <button class="btn btn-outline" type="button" id="back-btn"><span class="arrow-disc flip" data-icon="arrow-right"></span><span>Back</span></button>
+    <p class="caption muted controls-hint" id="controls-hint">—</p>
+    <button class="btn btn-dark" type="button" id="next-btn"><span id="next-label">Next</span><span class="arrow-disc" data-icon="arrow-right"></span></button>
+  </footer>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="icons.js"></script>
+  <script src="advisor.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

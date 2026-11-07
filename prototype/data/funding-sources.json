@@ -1,0 +1,562 @@
+{
+  "about": "Funding sources for the Gap Closer prototype. Names, URLs and the 'facts' lines come from lanes/3-fund-it/data/DATA-SOURCES.md (checked 2026-11-06 by the organizers). Every number inside 'placeholder' is INVENTED for the prototype and must be replaced with current program terms before anyone relies on it.",
+  "as_of": "2026-11-06",
+  "placeholder_note": "PLACEHOLDER values: award_per_home, max_total, probability, prep_months (time to prepare and submit) and months_to_funds (submission to money) are made up so the advisor has something to rank. They are not program terms.",
+  "sources": [
+    {
+      "id": "hud-home",
+      "name": "HOME Investment Partnerships",
+      "level": "federal",
+      "agency": "HUD, through California HCD or a local participating jurisdiction",
+      "pays_for": "Affordable homeownership and housing activities. Buyer income caps follow the State HOME income limits.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": "https://www.hcd.ca.gov/grants-and-funding/programs-active/home-investment-partnerships-program",
+      "more_urls": [
+        "https://www.hudexchange.info/programs/home/",
+        "https://www.hcd.ca.gov/sites/default/files/docs/grants-and-funding/2026-california-HOME-income-limits_0.pdf"
+      ],
+      "source_status": "VERIFIED",
+      "facts": [
+        "State HOME income limits are a separate PDF, effective June 1, 2026."
+      ],
+      "funds_open": "unknown",
+      "kind": "grant or loan",
+      "placeholder": {
+        "award_per_home": 30000,
+        "max_total": 300000,
+        "probability": 0.35,
+        "months_to_funds": 14,
+        "counts_toward_gap": true,
+        "prep_months": 3
+      },
+      "next_step": "Ask the city or county housing office whether it receives HOME directly or applies through HCD, and when the next round opens."
+    },
+    {
+      "id": "hud-cdbg",
+      "name": "Community Development Block Grant (CDBG)",
+      "level": "federal",
+      "agency": "HUD, to entitlement cities and counties, or through HCD for smaller cities",
+      "pays_for": "Community development activities chosen locally, which can include housing.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": "https://www.hudexchange.info/programs/cdbg-entitlement/",
+      "more_urls": [
+        "https://www.hcd.ca.gov/grants-and-funding/programs-active/community-development-block-grant"
+      ],
+      "source_status": "VERIFIED",
+      "facts": [],
+      "funds_open": "unknown",
+      "kind": "grant",
+      "placeholder": {
+        "award_per_home": 15000,
+        "max_total": 150000,
+        "probability": 0.3,
+        "months_to_funds": 12,
+        "counts_toward_gap": true,
+        "prep_months": 3
+      },
+      "next_step": "Check whether this city is a CDBG entitlement jurisdiction and read its current Action Plan."
+    },
+    {
+      "id": "hud-shop",
+      "name": "Self-Help Homeownership Opportunity Program (SHOP)",
+      "level": "federal",
+      "agency": "HUD",
+      "pays_for": "Land and infrastructure for sweat-equity and volunteer-based builders, not whole-home costs.",
+      "where": {
+        "scope": "national"
+      },
+      "url": "https://www.hudexchange.info/programs/shop/",
+      "more_urls": [],
+      "source_status": "VERIFIED",
+      "facts": [
+        "Funds land and infrastructure for sweat-equity builders, which limits what a dollar can pay for."
+      ],
+      "funds_open": "unknown",
+      "kind": "grant",
+      "requires": "Sweat-equity or volunteer build model",
+      "placeholder": {
+        "award_per_home": 15000,
+        "max_total": 150000,
+        "probability": 0.2,
+        "months_to_funds": 16,
+        "counts_toward_gap": true,
+        "prep_months": 3
+      },
+      "next_step": "Only pursue if the project uses a sweat-equity model. Confirm eligibility on HUD Exchange."
+    },
+    {
+      "id": "hcd-calhome",
+      "name": "CalHome (Homeownership Super NOFA)",
+      "level": "state",
+      "agency": "California HCD",
+      "pays_for": "State homeownership loans to local agencies and nonprofits: down payment, rehab, self-help.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": "https://www.hcd.ca.gov/grants-and-funding/programs-active/calhome",
+      "more_urls": [
+        "https://www.hcd.ca.gov/funding/hosn"
+      ],
+      "source_status": "VERIFIED",
+      "facts": [
+        "HCD bundles homeownership programs in its Homeownership Super NOFA (HOSN)."
+      ],
+      "funds_open": "unknown",
+      "kind": "loan to agencies and nonprofits",
+      "placeholder": {
+        "award_per_home": 40000,
+        "max_total": 400000,
+        "probability": 0.4,
+        "months_to_funds": 12,
+        "counts_toward_gap": true,
+        "prep_months": 3
+      },
+      "next_step": "Read the current HOSN notice for round dates and per-unit limits."
+    },
+    {
+      "id": "calhfa-myhome",
+      "name": "CalHFA MyHome Assistance",
+      "level": "state",
+      "agency": "California Housing Finance Agency",
+      "pays_for": "A junior loan to the buyer for down payment or closing costs.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": "https://www.calhfa.ca.gov/homebuyer/programs/",
+      "more_urls": [],
+      "source_status": "VERIFIED",
+      "facts": [
+        "The CalHFA page says up to 3.5% (FHA) or 3% (conventional)."
+      ],
+      "funds_open": "unknown",
+      "kind": "buyer junior loan",
+      "stack_group": "calhfa-buyer",
+      "placeholder": {
+        "award_per_home": 9000,
+        "max_total": null,
+        "probability": 0.6,
+        "months_to_funds": 3,
+        "counts_toward_gap": true,
+        "why_counts": "ASSUMPTION: buyer help raises what the family can pay at closing, which narrows the gap.",
+        "prep_months": 1
+      },
+      "next_step": "Have the buyer talk with a CalHFA-approved lender. This is the buyer's loan, not the project's."
+    },
+    {
+      "id": "calhfa-dream",
+      "name": "CalHFA Dream For All",
+      "level": "state",
+      "agency": "California Housing Finance Agency",
+      "pays_for": "A shared appreciation loan to the buyer.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": "https://calhfa.ca.gov/dream/",
+      "more_urls": [],
+      "source_status": "VERIFIED",
+      "facts": [
+        "The page says up to 20%, not to exceed $150,000, with voucher registration and a randomized drawing.",
+        "Search results (not read at the source) say funds ran out in 2023. Availability is not confirmed."
+      ],
+      "funds_open": "unknown",
+      "kind": "buyer shared appreciation loan",
+      "stack_group": "calhfa-buyer",
+      "placeholder": {
+        "award_per_home": 50000,
+        "max_total": null,
+        "probability": 0.1,
+        "months_to_funds": 9,
+        "counts_toward_gap": true,
+        "why_counts": "ASSUMPTION: buyer help raises what the family can pay at closing, which narrows the gap.",
+        "prep_months": 1
+      },
+      "next_step": "Check whether a new round is open before counting on it. Entry is by drawing."
+    },
+    {
+      "id": "calhfa-feb",
+      "name": "CalHFA Forgivable Equity Builder",
+      "level": "state",
+      "agency": "California Housing Finance Agency",
+      "pays_for": "A forgivable 0% buyer loan (per news reports).",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": null,
+      "more_urls": [],
+      "source_status": "UNVERIFIED",
+      "facts": [
+        "No official page was found. A 2022 CalHFA board handout described it as winding down."
+      ],
+      "funds_open": "no",
+      "kind": "buyer forgivable loan",
+      "placeholder": {
+        "award_per_home": 0,
+        "max_total": 0,
+        "probability": 0,
+        "months_to_funds": null,
+        "counts_toward_gap": false,
+        "prep_months": null
+      },
+      "next_step": "Do not model it as open."
+    },
+    {
+      "id": "ochft",
+      "name": "Orange County Housing Finance Trust",
+      "level": "county",
+      "agency": "Orange County Housing Finance Trust",
+      "pays_for": "Countywide housing funding through a NOFA. No homeownership text was found on its home page.",
+      "where": {
+        "scope": "county",
+        "state": "CA",
+        "county": "Orange County"
+      },
+      "url": "https://ochft.org/programs",
+      "more_urls": [
+        "https://www.ochft.org/"
+      ],
+      "source_status": "VERIFIED",
+      "facts": [
+        "The programs page loads and shows a NOFA."
+      ],
+      "funds_open": "unknown",
+      "kind": "grant or loan",
+      "placeholder": {
+        "award_per_home": 35000,
+        "max_total": 350000,
+        "probability": 0.3,
+        "months_to_funds": 10,
+        "counts_toward_gap": true,
+        "prep_months": 2
+      },
+      "next_step": "Read the current NOFA and confirm ownership projects are eligible."
+    },
+    {
+      "id": "santa-ana-mfh",
+      "name": "Santa Ana My First Home",
+      "level": "city",
+      "agency": "City of Santa Ana",
+      "pays_for": "City down-payment loan to the buyer.",
+      "where": {
+        "scope": "city",
+        "state": "CA",
+        "county": "Orange County",
+        "city": "Santa Ana"
+      },
+      "url": "https://santa-ana.org/my-first-home",
+      "more_urls": [],
+      "source_status": "VERIFIED",
+      "facts": [
+        "The page loads with the title My First Home Program. Loan terms came from a search snippet, not the page: read it."
+      ],
+      "funds_open": "unknown",
+      "kind": "buyer down-payment loan",
+      "placeholder": {
+        "award_per_home": 40000,
+        "max_total": null,
+        "probability": 0.5,
+        "months_to_funds": 4,
+        "counts_toward_gap": true,
+        "why_counts": "ASSUMPTION: buyer help raises what the family can pay at closing, which narrows the gap.",
+        "prep_months": 1
+      },
+      "next_step": "Read the program page for current loan terms and income limits."
+    },
+    {
+      "id": "garden-grove-fthb",
+      "name": "Garden Grove First-Time Homebuyer Program",
+      "level": "city",
+      "agency": "City of Garden Grove",
+      "pays_for": "City down-payment help, under its 2025 guidelines.",
+      "where": {
+        "scope": "city",
+        "state": "CA",
+        "county": "Orange County",
+        "city": "Garden Grove"
+      },
+      "url": "https://ggcity.org/sites/default/files/2025-first-time-homebuyer-guidelines.pdf",
+      "more_urls": [],
+      "source_status": "VERIFIED",
+      "facts": [
+        "The 2025 guidelines PDF loads (22 MB). Dollar tiers came from a search snippet only."
+      ],
+      "funds_open": "unknown",
+      "kind": "buyer down-payment help",
+      "placeholder": {
+        "award_per_home": 40000,
+        "max_total": null,
+        "probability": 0.45,
+        "months_to_funds": 4,
+        "counts_toward_gap": true,
+        "why_counts": "ASSUMPTION: buyer help raises what the family can pay at closing, which narrows the gap.",
+        "prep_months": 1
+      },
+      "next_step": "Read the guidelines PDF for tiers and income limits."
+    },
+    {
+      "id": "anaheim-unknown",
+      "name": "Anaheim down-payment program",
+      "level": "city",
+      "agency": "City of Anaheim",
+      "pays_for": "Unknown.",
+      "where": {
+        "scope": "city",
+        "state": "CA",
+        "county": "Orange County",
+        "city": "Anaheim"
+      },
+      "url": null,
+      "more_urls": [],
+      "source_status": "UNVERIFIED",
+      "facts": [
+        "No program could be confirmed. The city site blocks automated fetches, and one URL seen elsewhere is an unrelated plan page."
+      ],
+      "funds_open": "unknown",
+      "kind": "unknown",
+      "placeholder": {
+        "award_per_home": 0,
+        "max_total": 0,
+        "probability": 0,
+        "months_to_funds": null,
+        "counts_toward_gap": false,
+        "prep_months": null
+      },
+      "next_step": "Call the city housing office."
+    },
+    {
+      "id": "costa-mesa-unknown",
+      "name": "Costa Mesa down-payment program",
+      "level": "city",
+      "agency": "City of Costa Mesa",
+      "pays_for": "Unknown.",
+      "where": {
+        "scope": "city",
+        "state": "CA",
+        "county": "Orange County",
+        "city": "Costa Mesa"
+      },
+      "url": null,
+      "more_urls": [],
+      "source_status": "UNVERIFIED",
+      "facts": [
+        "No program could be confirmed. The city site blocks automated fetches."
+      ],
+      "funds_open": "unknown",
+      "kind": "unknown",
+      "placeholder": {
+        "award_per_home": 0,
+        "max_total": 0,
+        "probability": 0,
+        "months_to_funds": null,
+        "counts_toward_gap": false,
+        "prep_months": null
+      },
+      "next_step": "Call the city housing office."
+    },
+    {
+      "id": "fullerton-unknown",
+      "name": "Fullerton down-payment program",
+      "level": "city",
+      "agency": "City of Fullerton",
+      "pays_for": "Unknown.",
+      "where": {
+        "scope": "city",
+        "state": "CA",
+        "county": "Orange County",
+        "city": "Fullerton"
+      },
+      "url": null,
+      "more_urls": [],
+      "source_status": "UNVERIFIED",
+      "facts": [
+        "No program could be confirmed. The city site blocks automated fetches."
+      ],
+      "funds_open": "unknown",
+      "kind": "unknown",
+      "placeholder": {
+        "award_per_home": 0,
+        "max_total": 0,
+        "probability": 0,
+        "months_to_funds": null,
+        "counts_toward_gap": false,
+        "prep_months": null
+      },
+      "next_step": "Call the city housing office."
+    },
+    {
+      "id": "ca-housing-bond",
+      "name": "State housing bond",
+      "level": "bond",
+      "agency": "State of California",
+      "pays_for": "Unknown. No homeownership set-aside was confirmed.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": null,
+      "more_urls": [],
+      "source_status": "UNVERIFIED",
+      "facts": [
+        "The HCD URLs tried returned 404. Prop 1 (2024) is the behavioral health bond, not a homeownership bond."
+      ],
+      "funds_open": "unknown",
+      "kind": "bond proceeds",
+      "placeholder": {
+        "award_per_home": 0,
+        "max_total": 0,
+        "probability": 0,
+        "months_to_funds": null,
+        "counts_toward_gap": false,
+        "prep_months": null
+      },
+      "next_step": "Confirm with HCD whether any current bond has homeownership money."
+    },
+    {
+      "id": "local-bond-placeholder",
+      "name": "Local housing bond or tax-exempt financing",
+      "level": "bond",
+      "agency": "Example category. No program identified.",
+      "pays_for": "PLACEHOLDER category so the prototype can show where a local bond would sit.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": null,
+      "more_urls": [],
+      "source_status": "PLACEHOLDER",
+      "facts": [
+        "No local bond program has been researched for this prototype."
+      ],
+      "funds_open": "unknown",
+      "kind": "bond proceeds",
+      "placeholder": {
+        "award_per_home": 20000,
+        "max_total": 200000,
+        "probability": 0.15,
+        "months_to_funds": 20,
+        "counts_toward_gap": true,
+        "prep_months": 4
+      },
+      "next_step": "Ask the city and county whether a local housing bond or measure funds ownership homes."
+    },
+    {
+      "id": "fhlbsf-wish",
+      "name": "FHLBank San Francisco WISH",
+      "level": "lender",
+      "agency": "Federal Home Loan Bank of San Francisco, through member banks",
+      "pays_for": "Grants for first-time buyer down-payment help, delivered through member banks.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": "https://fhlbsf.com/products/community-programs-grants/wish",
+      "more_urls": [
+        "https://www.fhlbsf.com/products/community-programs-grants"
+      ],
+      "source_status": "VERIFIED",
+      "facts": [],
+      "funds_open": "unknown",
+      "kind": "buyer grant via member bank",
+      "placeholder": {
+        "award_per_home": 25000,
+        "max_total": null,
+        "probability": 0.45,
+        "months_to_funds": 6,
+        "counts_toward_gap": true,
+        "why_counts": "ASSUMPTION: buyer help raises what the family can pay at closing, which narrows the gap.",
+        "prep_months": 1
+      },
+      "next_step": "Find a participating member bank and ask when its WISH allocation opens."
+    },
+    {
+      "id": "fhlbsf-ahp",
+      "name": "FHLBank San Francisco Affordable Housing Program (AHP)",
+      "level": "lender",
+      "agency": "Federal Home Loan Bank of San Francisco, with a member bank sponsor",
+      "pays_for": "Competitive grants and subsidized advances for affordable housing.",
+      "where": {
+        "scope": "state",
+        "state": "CA"
+      },
+      "url": "https://fhlbsf.com/products/community-programs-grants/ahp",
+      "more_urls": [],
+      "source_status": "VERIFIED",
+      "facts": [],
+      "funds_open": "unknown",
+      "kind": "competitive grant",
+      "placeholder": {
+        "award_per_home": 30000,
+        "max_total": 500000,
+        "probability": 0.3,
+        "months_to_funds": 12,
+        "counts_toward_gap": true,
+        "prep_months": 2
+      },
+      "next_step": "Line up a member bank sponsor and read the current AHP round dates."
+    },
+    {
+      "id": "cra-banks",
+      "name": "Bank Community Reinvestment Act commitments",
+      "level": "lender",
+      "agency": "Banks regulated under the CRA (OCC overview)",
+      "pays_for": "A lever: banks' CRA obligations can motivate grants, sponsorships or below-market loans.",
+      "where": {
+        "scope": "national"
+      },
+      "url": "https://www.occ.treas.gov/topics/consumers-and-communities/cra/index-cra.html",
+      "more_urls": [],
+      "source_status": "VERIFIED",
+      "facts": [
+        "The FFIEC CRA data page returned 403 and is unverified."
+      ],
+      "funds_open": "unknown",
+      "kind": "varies by bank",
+      "placeholder": {
+        "award_per_home": 10000,
+        "max_total": 100000,
+        "probability": 0.25,
+        "months_to_funds": 6,
+        "counts_toward_gap": true,
+        "prep_months": 1
+      },
+      "next_step": "Ask local branch community development officers about CRA-motivated grants."
+    },
+    {
+      "id": "liif",
+      "name": "Low Income Investment Fund",
+      "level": "lender",
+      "agency": "CDFI lender",
+      "pays_for": "Loans for affordable housing. A loan bridges timing but does not close the gap by itself.",
+      "where": {
+        "scope": "national"
+      },
+      "url": "https://www.liifund.org/",
+      "more_urls": [
+        "https://www.cdfifund.gov/programs-training/programs/cdfi-program"
+      ],
+      "source_status": "VERIFIED",
+      "facts": [],
+      "funds_open": "unknown",
+      "kind": "loan",
+      "placeholder": {
+        "award_per_home": 0,
+        "max_total": 0,
+        "probability": 0,
+        "months_to_funds": null,
+        "counts_toward_gap": false,
+        "why_counts": "A loan must be repaid, so it is shown for cash flow but not counted toward the gap.",
+        "prep_months": null
+      },
+      "next_step": "Use for bridge or construction financing while grants arrive."
+    }
+  ]
+}

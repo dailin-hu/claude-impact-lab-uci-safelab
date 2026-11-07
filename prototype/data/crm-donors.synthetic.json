@@ -1,0 +1,936 @@
+{
+ "SYNTHETIC": "Made-up CRM records for the placeholder connector. Not real donors, people or organizations. Every name, place, amount and personal tie is invented. 'ties' stands for where a person, or an organization's main contact, has lived or worked, as a donor might share it with the nonprofit. Replace this file with a real CRM connector (read-only) when one is approved. Emails use the reserved example.org domain, which cannot receive mail.",
+ "as_of": "2026-11-07",
+ "donors": [
+  {
+   "id": "SYN-101",
+   "display_name": "R. Alvarez (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing",
+    "families"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 5000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 4000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2023,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 3000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "lived",
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2004-2016"
+    }
+   ],
+   "email": "syn101@example.org"
+  },
+  {
+   "id": "SYN-102",
+   "display_name": "K. Tran (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing",
+    "education"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Garden Grove",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 7500,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Westminster",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 5000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "grew up",
+     "city": "Garden Grove",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1990-2008"
+    }
+   ],
+   "email": "syn102@example.org"
+  },
+  {
+   "id": "SYN-103",
+   "display_name": "M. & J. Patel (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 25000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2023,
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 20000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "lives",
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2012-now"
+    },
+    {
+     "kind": "grew up",
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1985-2003"
+    }
+   ],
+   "email": "syn103@example.org"
+  },
+  {
+   "id": "SYN-104",
+   "display_name": "D. Okafor (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing",
+    "veterans"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2024,
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 2500,
+     "purpose": "housing"
+    },
+    {
+     "year": 2022,
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 2500,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "lives",
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2010-now"
+    }
+   ],
+   "email": "syn104@example.org"
+  },
+  {
+   "id": "SYN-105",
+   "display_name": "S. Kim (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "arts"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Costa Mesa",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 20000,
+     "purpose": "other"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "grew up",
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1979-1997"
+    }
+   ],
+   "email": "syn105@example.org"
+  },
+  {
+   "id": "SYN-106",
+   "display_name": "L. Moreno (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing",
+    "seniors"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2019,
+     "city": "Huntington Beach",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 12000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "lives",
+     "city": "Huntington Beach",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2001-now"
+    }
+   ],
+   "email": "syn106@example.org"
+  },
+  {
+   "id": "SYN-107",
+   "display_name": "A. Brooks (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 1500,
+     "purpose": "housing"
+    },
+    {
+     "year": 2025,
+     "city": "Tustin",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 1000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "lives",
+     "city": "Tustin",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2018-now"
+    }
+   ],
+   "email": "syn107@example.org"
+  },
+  {
+   "id": "SYN-108",
+   "display_name": "T. Nguyen (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing",
+    "families"
+   ],
+   "do_not_solicit": true,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 30000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "lives",
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2015-now"
+    }
+   ],
+   "email": "syn108@example.org"
+  },
+  {
+   "id": "SYN-109",
+   "display_name": "C. Ramirez (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2024,
+     "city": "Fullerton",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 10000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2025,
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 8000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "lived",
+     "city": "Fullerton",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1999-2012"
+    }
+   ],
+   "email": "syn109@example.org"
+  },
+  {
+   "id": "SYN-110",
+   "display_name": "P. Lee (synthetic)",
+   "type": "individual",
+   "is_individual": true,
+   "interests": [
+    "health",
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2023,
+     "city": "Los Angeles",
+     "county": "Los Angeles County",
+     "state": "CA",
+     "amount": 15000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "grew up",
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1988-2006"
+    },
+    {
+     "kind": "lives",
+     "city": "Los Angeles",
+     "county": "Los Angeles County",
+     "state": "CA",
+     "years": "2010-now"
+    }
+   ],
+   "email": "syn110@example.org"
+  },
+  {
+   "id": "SYN-201",
+   "display_name": "Lantern Giving Account (synthetic DAF)",
+   "type": "donor-advised fund",
+   "is_individual": false,
+   "interests": [
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 15000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Orange",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 10000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "contact lived",
+     "city": "Orange",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2008-2019"
+    }
+   ],
+   "email": "syn201@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-202",
+   "display_name": "Northstar Charitable Account (synthetic DAF)",
+   "type": "donor-advised fund",
+   "is_individual": false,
+   "interests": [
+    "housing",
+    "workforce"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 40000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Costa Mesa",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 25000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "contact lives",
+     "city": "Costa Mesa",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2016-now"
+    }
+   ],
+   "email": "syn202@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-203",
+   "display_name": "Seabright Fund Account (synthetic DAF)",
+   "type": "donor-advised fund",
+   "is_individual": false,
+   "interests": [
+    "education"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Fullerton",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 30000,
+     "purpose": "other"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "contact grew up",
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1992-2010"
+    }
+   ],
+   "email": "syn203@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-301",
+   "display_name": "Twin Palms Family Trust (synthetic)",
+   "type": "trust",
+   "is_individual": false,
+   "interests": [
+    "housing",
+    "veterans"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 35000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Fullerton",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 25000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2023,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 20000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "contact lives",
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2000-now"
+    }
+   ],
+   "email": "syn301@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-302",
+   "display_name": "Mesa Verde Charitable Trust (synthetic)",
+   "type": "trust",
+   "is_individual": false,
+   "interests": [
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2021,
+     "city": "Costa Mesa",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 30000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [],
+   "email": "syn302@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-401",
+   "display_name": "Harbor Light Family Fund (synthetic)",
+   "type": "family foundation",
+   "is_individual": false,
+   "interests": [
+    "housing",
+    "families"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 25000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2023,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 20000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2022,
+     "city": "Tustin",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 15000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "contact lives",
+     "city": "Tustin",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2011-now"
+    }
+   ],
+   "email": "syn401@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-402",
+   "display_name": "Orchard Street Foundation (synthetic)",
+   "type": "family foundation",
+   "is_individual": false,
+   "interests": [
+    "education"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Fullerton",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 40000,
+     "purpose": "other"
+    },
+    {
+     "year": 2023,
+     "city": "Fullerton",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 35000,
+     "purpose": "other"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "contact lives",
+     "city": "Fullerton",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1995-now"
+    }
+   ],
+   "email": "syn402@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-403",
+   "display_name": "Inland Partners Fund (synthetic)",
+   "type": "family foundation",
+   "is_individual": false,
+   "interests": [
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Riverside",
+     "county": "Riverside County",
+     "state": "CA",
+     "amount": 60000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "San Bernardino",
+     "county": "San Bernardino County",
+     "state": "CA",
+     "amount": 45000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "contact grew up",
+     "city": "Garden Grove",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1975-1993"
+    }
+   ],
+   "email": "syn403@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-501",
+   "display_name": "Coastal Builders Giving Program (synthetic)",
+   "type": "corporate",
+   "is_individual": false,
+   "interests": [
+    "housing",
+    "workforce"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 50000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Costa Mesa",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 30000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "based in",
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2001-now"
+    }
+   ],
+   "email": "syn501@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-502",
+   "display_name": "Metro Credit Union Giving (synthetic)",
+   "type": "corporate",
+   "is_individual": false,
+   "interests": [
+    "housing",
+    "financial literacy"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 15000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2025,
+     "city": "Anaheim",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 15000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Orange",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 10000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "based in",
+     "city": "Santa Ana",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1996-now"
+    }
+   ],
+   "email": "syn502@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-503",
+   "display_name": "Pacific Rim Tech Cares (synthetic)",
+   "type": "corporate",
+   "is_individual": false,
+   "interests": [
+    "workforce",
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2022,
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 75000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2021,
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 50000,
+     "purpose": "other"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "based in",
+     "city": "Irvine",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2014-now"
+    }
+   ],
+   "email": "syn503@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-601",
+   "display_name": "Grace Valley Congregation (synthetic)",
+   "type": "faith community",
+   "is_individual": false,
+   "interests": [
+    "housing",
+    "land"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2024,
+     "city": "Garden Grove",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 10000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2020,
+     "city": "Garden Grove",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 8000,
+     "purpose": "other"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "based in",
+     "city": "Garden Grove",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "1968-now"
+    }
+   ],
+   "email": "syn601@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-602",
+   "display_name": "Saddleback Neighbors Circle (synthetic)",
+   "type": "giving circle",
+   "is_individual": false,
+   "interests": [
+    "housing",
+    "families"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Mission Viejo",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 8000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Lake Forest",
+     "county": "Orange County",
+     "state": "CA",
+     "amount": 6000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "based in",
+     "city": "Mission Viejo",
+     "county": "Orange County",
+     "state": "CA",
+     "years": "2015-now"
+    }
+   ],
+   "email": "syn602@example.org",
+   "contact": "[Contact name]"
+  },
+  {
+   "id": "SYN-603",
+   "display_name": "South Bay Unity Fund (synthetic)",
+   "type": "community fund",
+   "is_individual": false,
+   "interests": [
+    "housing"
+   ],
+   "do_not_solicit": false,
+   "gifts": [
+    {
+     "year": 2025,
+     "city": "Long Beach",
+     "county": "Los Angeles County",
+     "state": "CA",
+     "amount": 20000,
+     "purpose": "housing"
+    },
+    {
+     "year": 2024,
+     "city": "Torrance",
+     "county": "Los Angeles County",
+     "state": "CA",
+     "amount": 15000,
+     "purpose": "housing"
+    }
+   ],
+   "ties": [
+    {
+     "kind": "based in",
+     "city": "Long Beach",
+     "county": "Los Angeles County",
+     "state": "CA",
+     "years": "2009-now"
+    }
+   ],
+   "email": "syn603@example.org",
+   "contact": "[Contact name]"
+  }
+ ]
+}
